@@ -3,6 +3,14 @@ module.exports = {
   turbopack: {
     root: __dirname,
   },
+  async rewrites() {
+    return [
+      {
+        source: '/japan-2026',
+        destination: '/japan-2026.html',
+      },
+    ];
+  },
   images: {
     remotePatterns: [
       {

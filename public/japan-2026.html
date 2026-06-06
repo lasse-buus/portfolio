@@ -1,0 +1,572 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600;700&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --ink:#1a1208;
+  --ink2:#4a3f2f;
+  --ink3:#8a7a60;
+  --paper:#faf7f2;
+  --paper2:#f0ebe0;
+  --red:#c0392b;
+  --gold:#b8860b;
+  --gold-light:#e8c84a;
+  --phase1:#1a3a5c;
+  --phase2:#5c1a1a;
+  --phase3:#1a4a2e;
+  --phase4:#3d1a5c;
+  --phase5:#1a3a5c;
+}
+body{font-family:'DM Sans',sans-serif;background:var(--paper);color:var(--ink);min-height:100vh;overflow-x:hidden}
+
+/* HERO */
+.hero{position:relative;height:420px;background:var(--ink);overflow:hidden;display:flex;align-items:flex-end}
+.hero-bg{position:absolute;inset:0;background:linear-gradient(160deg,#0d1f35 0%,#1a0a0a 50%,#0d1a12 100%);opacity:1}
+.hero-pattern{position:absolute;inset:0;background-image:repeating-linear-gradient(0deg,transparent,transparent 60px,rgba(255,255,255,0.015) 60px,rgba(255,255,255,0.015) 61px),repeating-linear-gradient(90deg,transparent,transparent 60px,rgba(255,255,255,0.015) 60px,rgba(255,255,255,0.015) 61px)}
+.hero-torii{position:absolute;right:0;top:0;bottom:0;width:50%;opacity:0.12;background:url('https://images.unsplash.com/photo-1478436127897-769e1b3f0f36?w=800') center/cover}
+.hero-content{position:relative;z-index:2;padding:40px 48px;width:100%}
+.hero-eyebrow{font-family:'DM Sans',sans-serif;font-size:11px;font-weight:500;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold-light);opacity:0.8;margin-bottom:12px}
+.hero-title{font-family:'Shippori Mincho',serif;font-size:64px;font-weight:700;color:#fff;line-height:0.9;margin-bottom:6px}
+.hero-title span{color:var(--gold-light)}
+.hero-sub{font-size:13px;font-weight:300;color:rgba(255,255,255,0.5);letter-spacing:0.05em;margin-top:14px}
+.hero-jp{position:absolute;right:48px;top:40px;font-family:'Shippori Mincho',serif;font-size:80px;font-weight:700;color:rgba(255,255,255,0.04);line-height:1;writing-mode:vertical-rl;text-orientation:upright;letter-spacing:0.1em}
+.hero-dates{display:inline-flex;align-items:center;gap:10px;margin-top:16px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);padding:8px 16px;border-radius:4px}
+.hero-dates span{font-size:12px;color:rgba(255,255,255,0.6);font-weight:300}
+.hero-dates strong{font-size:13px;color:#fff;font-weight:500}
+
+/* NAV */
+.phase-nav{background:#fff;border-bottom:1px solid var(--paper2);padding:0 48px;display:flex;gap:0;overflow-x:auto;scrollbar-width:none;position:sticky;top:0;z-index:100}
+.phase-nav::-webkit-scrollbar{display:none}
+.nav-btn{flex-shrink:0;padding:16px 20px;font-size:12px;font-weight:500;letter-spacing:0.05em;text-transform:uppercase;color:var(--ink3);cursor:pointer;border:none;background:none;border-bottom:2px solid transparent;transition:all 0.2s;white-space:nowrap}
+.nav-btn:hover{color:var(--ink)}
+.nav-btn.active{color:var(--ink);border-bottom-color:var(--ink)}
+
+/* CONTENT */
+.content{max-width:900px;margin:0 auto;padding:48px 48px}
+
+/* PHASE SECTION */
+.phase-section{display:none;animation:fadeIn 0.3s ease}
+.phase-section.active{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+
+/* PHASE HEADER */
+.phase-header{display:grid;grid-template-columns:1fr 280px;gap:32px;margin-bottom:40px;align-items:start}
+.phase-number{font-family:'Shippori Mincho',serif;font-size:80px;font-weight:700;line-height:1;color:var(--paper2);margin-bottom:-16px}
+.phase-city{font-family:'Shippori Mincho',serif;font-size:42px;font-weight:600;color:var(--ink);line-height:1;margin-bottom:8px}
+.phase-dates-tag{display:inline-flex;align-items:center;gap:6px;background:var(--ink);color:#fff;padding:5px 12px;border-radius:2px;font-size:11px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:16px}
+.phase-desc{font-size:14px;line-height:1.8;color:var(--ink2);font-weight:300}
+.phase-img{border-radius:6px;overflow:hidden;height:200px}
+.phase-img img{width:100%;height:100%;object-fit:cover}
+
+/* HOTEL CARD */
+.hotel-card{background:#fff;border:1px solid var(--paper2);border-radius:6px;padding:24px;margin-bottom:32px;position:relative}
+.hotel-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--ink3);margin-bottom:8px}
+.hotel-name{font-family:'Shippori Mincho',serif;font-size:22px;font-weight:600;color:var(--ink);margin-bottom:4px}
+.hotel-area{font-size:13px;color:var(--ink3);margin-bottom:14px}
+.hotel-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px}
+.hotel-detail{font-size:12px;color:var(--ink2);line-height:1.6}
+.hotel-detail strong{display:block;font-size:10px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink3);margin-bottom:2px}
+.hotel-rating{position:absolute;top:24px;right:24px;text-align:right}
+.hotel-score{font-family:'Shippori Mincho',serif;font-size:28px;font-weight:700;color:var(--ink);line-height:1}
+.hotel-reviews{font-size:11px;color:var(--ink3)}
+.hotel-note{font-size:13px;color:var(--ink2);line-height:1.7;border-top:1px solid var(--paper2);padding-top:12px;font-style:italic;font-weight:300}
+
+/* ACTIVITIES */
+.activities-title{font-size:11px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--ink3);margin-bottom:14px}
+.activities-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:32px}
+.activity-item{display:flex;align-items:flex-start;gap:10px;padding:12px 14px;background:#fff;border:1px solid var(--paper2);border-radius:4px;font-size:13px;color:var(--ink2);line-height:1.4}
+.activity-dot{width:6px;height:6px;border-radius:50%;background:var(--ink);margin-top:4px;flex-shrink:0}
+.activity-item.highlight{border-color:var(--gold);background:#fffbf0}
+.activity-item.highlight .activity-dot{background:var(--gold)}
+
+/* TRAVEL BAND */
+.travel-band{background:var(--ink);color:#fff;border-radius:6px;padding:16px 24px;margin:24px 0;display:flex;align-items:center;gap:16px}
+.travel-icon{font-size:20px;opacity:0.6}
+.travel-text{font-size:13px;color:rgba(255,255,255,0.7);font-weight:300}
+.travel-text strong{color:#fff;font-weight:500}
+
+/* OPTIONAL BLOCK */
+.optional-block{border:2px dashed var(--gold);border-radius:6px;padding:24px;margin-bottom:32px;background:#fffbf0}
+.optional-tag{display:inline-flex;align-items:center;gap:6px;background:var(--gold);color:#fff;padding:4px 10px;border-radius:2px;font-size:10px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:12px}
+.optional-title{font-family:'Shippori Mincho',serif;font-size:26px;font-weight:600;color:var(--ink);margin-bottom:8px}
+.optional-desc{font-size:13px;color:var(--ink2);line-height:1.8;font-weight:300;margin-bottom:14px}
+.optional-detail{font-size:12px;color:var(--ink3);line-height:1.8}
+
+/* TIPS SECTION */
+.tips-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
+.tip-card{background:#fff;border:1px solid var(--paper2);border-radius:4px;padding:14px 16px}
+.tip-card strong{display:block;font-size:12px;font-weight:500;color:var(--ink);margin-bottom:4px}
+.tip-card p{font-size:12px;color:var(--ink3);line-height:1.6;font-weight:300}
+
+/* PHASE OVERVIEW (intro tab) */
+.overview-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-bottom:40px}
+.ov-card{background:#fff;border:1px solid var(--paper2);border-radius:6px;overflow:hidden;cursor:pointer;transition:transform 0.15s,box-shadow 0.15s}
+.ov-card:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,0.08)}
+.ov-img{height:120px;overflow:hidden}
+.ov-img img{width:100%;height:100%;object-fit:cover}
+.ov-body{padding:14px 16px}
+.ov-phase{font-size:10px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink3);margin-bottom:4px}
+.ov-city{font-family:'Shippori Mincho',serif;font-size:20px;font-weight:600;color:var(--ink);margin-bottom:2px}
+.ov-dates{font-size:11px;color:var(--ink3)}
+.ov-nights{font-size:11px;color:var(--ink3);margin-top:6px}
+
+.intro-block{background:var(--ink);color:#fff;border-radius:6px;padding:28px 32px;margin-bottom:32px}
+.intro-block h2{font-family:'Shippori Mincho',serif;font-size:28px;font-weight:600;margin-bottom:12px}
+.intro-block p{font-size:13px;line-height:1.9;color:rgba(255,255,255,0.65);font-weight:300}
+.flight-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:20px}
+.flight-box{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:4px;padding:14px 16px}
+.flight-label{font-size:10px;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-bottom:6px}
+.flight-route{font-family:'Shippori Mincho',serif;font-size:18px;color:#fff;margin-bottom:4px}
+.flight-time{font-size:12px;color:rgba(255,255,255,0.5)}
+
+@media(max-width:640px){
+  .hero-title{font-size:40px}
+  .phase-header{grid-template-columns:1fr}
+  .phase-img{display:none}
+  .activities-grid,.hotel-grid,.overview-grid,.tips-grid,.flight-grid{grid-template-columns:1fr}
+  .content{padding:32px 24px}
+  .phase-nav{padding:0 24px}
+  .hero-content{padding:28px 24px}
+}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-pattern"></div>
+  <div class="hero-torii"></div>
+  <div class="hero-jp">日本</div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">Travel Guide</div>
+    <div class="hero-title">Japan <span>2026</span></div>
+    <div class="hero-dates">
+      <strong>Oslo → Tokyo HND</strong>
+      <span>·</span>
+      <span>30 Aug – 16 Sep</span>
+      <span>·</span>
+      <span>16 nights</span>
+    </div>
+  </div>
+</div>
+
+<nav class="phase-nav">
+  <button class="nav-btn active" onclick="show('overview')">Overview</button>
+  <button class="nav-btn" onclick="show('tokyo1')">Tokyo I</button>
+  <button class="nav-btn" onclick="show('kyoto')">Kyoto</button>
+  <button class="nav-btn" onclick="show('osaka')">Osaka</button>
+  <button class="nav-btn" onclick="show('hiroshima')">Hiroshima</button>
+  <button class="nav-btn" onclick="show('hakone')">Hakone + Tokyo II</button>
+  <button class="nav-btn" onclick="show('practical')">Practical Info</button>
+</nav>
+
+<div class="content">
+
+<!-- OVERVIEW -->
+<div class="phase-section active" id="s-overview">
+  <div class="intro-block">
+    <h2>The Route</h2>
+    <p>Tokyo → Kyoto → Osaka (+ optional Koyasan) → Hiroshima & Miyajima → Hakone → Tokyo. A 16-night journey through Japan's most iconic cities, a sacred mountain monastery, floating torii gates, and a night soaking in volcanic hot springs with views of Mount Fuji.</p>
+    <div class="flight-grid">
+      <div class="flight-box">
+        <div class="flight-label">Outbound</div>
+        <div class="flight-route">Oslo → Tokyo HND</div>
+        <div class="flight-time">30 Aug 09:55 → 31 Aug 07:55</div>
+      </div>
+      <div class="flight-box">
+        <div class="flight-label">Return</div>
+        <div class="flight-route">Tokyo HND → Oslo</div>
+        <div class="flight-time">16 Sep 11:05 → 16 Sep 20:15</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="overview-grid">
+    <div class="ov-card" onclick="show('tokyo1')">
+      <div class="ov-img"><img src="https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?w=400&q=80" alt="Tokyo" loading="lazy"></div>
+      <div class="ov-body">
+        <div class="ov-phase">Phase 1</div>
+        <div class="ov-city">Tokyo</div>
+        <div class="ov-dates">Aug 31 – Sep 4</div>
+        <div class="ov-nights">🌙 4 nights · LYURO Kiyosumi</div>
+      </div>
+    </div>
+    <div class="ov-card" onclick="show('kyoto')">
+      <div class="ov-img"><img src="https://images.unsplash.com/photo-1478436127897-769e1b3f0f36?w=400&q=80" alt="Kyoto" loading="lazy"></div>
+      <div class="ov-body">
+        <div class="ov-phase">Phase 2</div>
+        <div class="ov-city">Kyoto</div>
+        <div class="ov-dates">Sep 4 – Sep 7</div>
+        <div class="ov-nights">🌙 3 nights · Shounsai machiya</div>
+      </div>
+    </div>
+    <div class="ov-card" onclick="show('osaka')">
+      <div class="ov-img"><img src="https://images.unsplash.com/photo-1590559899731-a382839e5549?w=400&q=80" alt="Osaka" loading="lazy"></div>
+      <div class="ov-body">
+        <div class="ov-phase">Phase 3</div>
+        <div class="ov-city">Osaka</div>
+        <div class="ov-dates">Sep 7 – Sep 10</div>
+        <div class="ov-nights">🌙 3 nights · Candeo The Tower</div>
+      </div>
+    </div>
+    <div class="ov-card" onclick="show('hiroshima')">
+      <div class="ov-img"><img src="https://images.unsplash.com/photo-1526481280693-3bfa7568e0f3?w=400&q=80" alt="Hiroshima" loading="lazy"></div>
+      <div class="ov-body">
+        <div class="ov-phase">Phase 4</div>
+        <div class="ov-city">Hiroshima</div>
+        <div class="ov-dates">Sep 10 – Sep 12</div>
+        <div class="ov-nights">🌙 2 nights · Hilton Hiroshima</div>
+      </div>
+    </div>
+    <div class="ov-card" onclick="show('hakone')">
+      <div class="ov-img"><img src="https://images.unsplash.com/photo-1490806843957-31f4c9a91c65?w=400&q=80" alt="Hakone" loading="lazy"></div>
+      <div class="ov-body">
+        <div class="ov-phase">Phase 5</div>
+        <div class="ov-city">Hakone + Tokyo II</div>
+        <div class="ov-dates">Sep 12 – Sep 16</div>
+        <div class="ov-nights">🌙 4 nights · RoheN + LYURO</div>
+      </div>
+    </div>
+    <div class="ov-card" onclick="show('osaka')" style="border:2px dashed #b8860b;background:#fffbf0">
+      <div class="ov-img" style="height:80px;background:linear-gradient(135deg,#2c1810,#1a1208);display:flex;align-items:center;justify-content:center">
+        <span style="font-family:'Shippori Mincho',serif;font-size:32px;color:rgba(255,255,255,0.3)">高野山</span>
+      </div>
+      <div class="ov-body">
+        <div class="ov-phase" style="color:#b8860b">★ Optional</div>
+        <div class="ov-city">Koyasan</div>
+        <div class="ov-dates">From Osaka</div>
+        <div class="ov-nights">🌙 1 night · Temple lodging</div>
+      </div>
+    </div>
+  </div>
+
+  <div style="margin-top:8px">
+    <div class="activities-title">Journey at a glance</div>
+    <div class="travel-band">
+      <span>Oslo</span>
+      <span style="color:rgba(255,255,255,0.3)">✈</span>
+      <span>Tokyo</span>
+      <span style="color:rgba(255,255,255,0.3)">⟶</span>
+      <span>Kyoto</span>
+      <span style="color:rgba(255,255,255,0.3)">⟶</span>
+      <span>Osaka</span>
+      <span style="color:rgba(255,255,255,0.3);font-size:11px">(+Koyasan?)</span>
+      <span style="color:rgba(255,255,255,0.3)">⟶</span>
+      <span>Hiroshima</span>
+      <span style="color:rgba(255,255,255,0.3)">⟶</span>
+      <span>Hakone</span>
+      <span style="color:rgba(255,255,255,0.3)">⟶</span>
+      <span>Tokyo</span>
+      <span style="color:rgba(255,255,255,0.3)">✈</span>
+      <span>Oslo</span>
+    </div>
+  </div>
+</div>
+
+<!-- TOKYO I -->
+<div class="phase-section" id="s-tokyo1">
+  <div class="phase-header">
+    <div>
+      <div class="phase-number">01</div>
+      <div class="phase-city">Tokyo</div>
+      <div class="phase-dates-tag">Aug 31 – Sep 4 · 4 nights</div>
+      <p class="phase-desc">Your first taste of Japan after the long flight from Oslo. Give yourself the first day to recover and wander — Tokyo rewards exploration without a plan. Shibuya, Asakusa, Akihabara: each neighbourhood is a world unto itself.</p>
+    </div>
+    <div class="phase-img"><img src="https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?w=600&q=80" alt="Tokyo" loading="lazy" style="width:100%;height:100%;object-fit:cover"></div>
+  </div>
+
+  <div class="hotel-card">
+    <div class="hotel-rating"><div class="hotel-score">4.4</div><div class="hotel-reviews">738 reviews</div></div>
+    <div class="hotel-label">Where you're staying</div>
+    <div class="hotel-name">LYURO Tokyo Kiyosumi</div>
+    <div class="hotel-area">by The Share Hotels · Kiyosumi-Shirakawa, Koto-ku</div>
+    <div class="hotel-grid">
+      <div class="hotel-detail"><strong>Address</strong>1-1-7 Kiyosumi, Koto-ku, Tokyo</div>
+      <div class="hotel-detail"><strong>Metro</strong>10-min walk to Kiyosumi-shirakawa Station</div>
+      <div class="hotel-detail"><strong>To Shinjuku/Shibuya</strong>~25–30 min by train</div>
+      <div class="hotel-detail"><strong>Airport</strong>Haneda limousine bus stop nearby</div>
+    </div>
+    <div class="hotel-note">Stylish riverside design hotel on the Sumida River. Craft beer brewery and river terrace on site. Recommended by family — great rooms for couples, good restaurants nearby. Same hotel for Phase 5 return.</div>
+  </div>
+
+  <div class="activities-title">Activities & highlights</div>
+  <div class="activities-grid">
+    <div class="activity-item highlight"><div class="activity-dot"></div><div>PokePark Kanto — book tickets well in advance</div></div>
+    <div class="activity-item highlight"><div class="activity-dot"></div><div>Shibuya crossing — wild 24 hours, don't miss it at night</div></div>
+    <div class="activity-item"><div class="activity-dot"></div><div>Asakusa & Senso-ji temple</div></div>
+    <div class="activity-item"><div class="activity-dot"></div><div>Kappabashi Street — kitchen & ceramics shops near Asakusa</div></div>
+    <div class="activity-item"><div class="activity-dot"></div><div>Akihabara — electronics & anime</div></div>
+    <div class="activity-item"><div class="activity-dot"></div><div>teamLab digital art (book ahead)</div></div>
+    <div class="activity-item"><div class="activity-dot"></div><div>Tokyu Hands Shibuya — craft, design & stickers</div></div>
+    <div class="activity-item"><div class="activity-dot"></div><div>Secondhand markets — search Google Maps on the day (Shimokitazawa, Harajuku)</div></div>
+    <div class="activity-item"><div class="activity-dot"></div><div>Shinjuku — wander at night</div></div>
+    <div class="activity-item"><div class="activity-dot"></div><div>Pachinko hall — worth one visit for the experience</div></div>
+  </div>
+
+  <div class="travel-band">
+    <span style="font-size:18px;opacity:0.5">🚄</span>
+    <div class="travel-text"><strong>Shinkansen Tokyo → Kyoto</strong> · ~2h 15min · ~¥14,000 pp · Sep 4</div>
+  </div>
+</div>
+
+<!-- KYOTO -->
+<div class="phase-section" id="s-kyoto">
+  <div class="phase-header">
+    <div>
+      <div class="phase-number">02</div>
+      <div class="phase-city">Kyoto</div>
+      <div class="phase-dates-tag">Sep 4 – Sep 7 · 3 nights</div>
+      <p class="phase-desc">Japan's ancient capital. Temples, bamboo groves, geisha districts, and deer in Nara an hour away. Note: Kyoto has become significantly more crowded since 2015 — go early to the major temples. Rent a bike and explore at your own pace.</p>
+    </div>
+    <div class="phase-img"><img src="https://images.unsplash.com/photo-1478436127897-769e1b3f0f36?w=600&q=80" alt="Kyoto torii gates" loading="lazy" style="width:100%;height:100%;object-fit:cover"></div>
+  </div>
+
+  <div class="hotel-card">
+    <div class="hotel-rating"><div class="hotel-score">4.5</div><div class="hotel-reviews">Booking.com · 9.5 location</div></div>
+    <div class="hotel-label">Where you're staying</div>
+    <div class="hotel-name">Shounsai</div>
+    <div class="hotel-area">Traditional machiya townhouse · Nakagyo-ku, Kyoto</div>
+    <div class="hotel-grid">
+      <div class="hotel-detail"><strong>Address</strong>653-1 Sanjoinokuma-cho, Nakagyo-ku</div>
+      <div class="hotel-detail"><strong>Subway</strong>5-min walk to Nijojo-mae Station</div>
+      <div class="hotel-detail"><strong>Nishiki Market</strong>10-min walk</div>
+      <div class="hotel-detail"><strong>Kyoto Station</strong>1.9km · Free bikes available</div>
+    </div>
+    <div class="hotel-note">A privately rented 2-storey Japanese machiya townhouse — tatami rooms, private garden, fully equipped kitchen. Not a hotel. Guests consistently rate the location 10/10 and say they walked to almost all major sights. A genuinely authentic Kyoto experience.</div>
+  </div>
+
+  <div class="activities-title">Activities & highlights</div>
+  <div class="activities-grid">
+    <div class="activity-item highlight"><div class="activity-dot"></div><div>Fushimi Inari Taisha — go at sunrise to beat the crowds</div></div>
+    <div class="activity-item highlight"><div class="activity-dot"></div><div>Nara Park day trip — deer + Todai-ji temple (45 min by train)</div></div>
+    <div class="activity-item"><div class="activity-dot"></div><div>Arashiyama bamboo grove</div></div>
+    <div class="activity-item"><div class="activity-dot"></div><div>Gion district — geisha neighbourhood</div></div>
+    <div class="activity-item"><div class="activity-dot"></div><div>Nishiki Market — Kyoto's food market street</div></div>
+    <div class="activity-item"><div class="activity-dot"></div><div>Rent bikes — best way to explore at your own pace</div></div>
+  </div>
+
+  <div class="travel-band">
+    <span style="font-size:18px;opacity:0.5">🚃</span>
+    <div class="travel-text"><strong>Local train Kyoto → Osaka</strong> · ~15–30 min · ~¥600 pp · Sep 7</div>
+  </div>
+</div>
+
+<!-- OSAKA -->
+<div class="phase-section" id="s-osaka">
+  <div class="phase-header">
+    <div>
+      <div class="phase-number">03</div>
+      <div class="phase-city">Osaka</div>
+      <div class="phase-dates-tag">Sep 7 – Sep 10 · 3 nights</div>
+      <p class="phase-desc">Japan's kitchen and party city. Louder, cheaper, and more chaotic than Tokyo or Kyoto — in the best possible way. Dotonbori at night is an experience you won't forget. USJ needs a full day.</p>
+    </div>
+    <div class="phase-img"><img src="https://images.unsplash.com/photo-1590559899731-a382839e5549?w=600&q=80" alt="Osaka" loading="lazy" style="width:100%;height:100%;object-fit:cover"></div>
+  </div>
+
+  <div class="hotel-card">
+    <div class="hotel-rating"><div class="hotel-score">4.1</div><div class="hotel-reviews">1,039 reviews</div></div>
+    <div class="hotel-label">Where you're staying</div>
+    <div class="hotel-name">Candeo Hotels Osaka The Tower</div>
+    <div class="hotel-area">Umeda / Kita-ku · Dojimahama, Osaka</div>
+    <div class="hotel-grid">
+      <div class="hotel-detail"><strong>Address</strong>1-1-27 Dojimahama, Kita-ku, Osaka</div>
+      <div class="hotel-detail"><strong>Subway</strong>2–3 min walk to Yodoyabashi Station</div>
+      <div class="hotel-detail"><strong>To Dotonbori</strong>~20 min by metro</div>
+      <div class="hotel-detail"><strong>Spa</strong>37th-floor Sky Spa included in stay</div>
+    </div>
+    <div class="hotel-note">Upscale tower hotel in Osaka's business district. The rooftop 37th-floor infinity pool and Sky Spa with panoramic city views is the standout feature. Floor-to-ceiling windows, modern rooms. Not in the heart of Dotonbori, but excellent metro connections.</div>
+  </div>
+
+  <div class="activities-title">Activities & highlights</div>
+  <div class="activities-grid">
+    <div class="activity-item highlight"><div class="activity-dot"></div><div>Universal Studios Japan + Super Nintendo World — book timed entry weeks ahead</div></div>
+    <div class="activity-item highlight"><div class="activity-dot"></div><div>Dotonbori at night — street food, neon, the Glico man</div></div>
+    <div class="activity-item"><div class="activity-dot"></div><div>Osaka Castle</div></div>
+    <div class="activity-item"><div class="activity-dot"></div><div>Kuromon Market — Osaka's fresh food market</div></div>
+    <div class="activity-item"><div class="activity-dot"></div><div>Takoyaki & Osaka-style okonomiyaki</div></div>
+    <div class="activity-item"><div class="activity-dot"></div><div>Candeo Sky Spa rooftop — do not skip</div></div>
+  </div>
+
+  <div class="optional-block">
+    <div class="optional-tag">★ Optional detour</div>
+    <div class="optional-title">Koyasan — Temple overnight</div>
+    <p class="optional-desc">Rated the single most memorable experience by family who have visited Japan multiple times. A UNESCO mountain town at 850m altitude with over 100 Buddhist temples. Stay overnight in a shukubo (temple lodging), eat shojin ryori vegetarian temple cuisine, and join morning prayer at dawn. The approach through ancient cedar forests is breathtaking.</p>
+    <div class="optional-detail">
+      <strong>How to get there:</strong> Nankai Railway from Namba → Gokurakubashi (~80 min) + cable car (~5 min). Not covered by JR Pass (~¥1,500 pp each way).<br>
+      <strong>If adding:</strong> Drop one Osaka night (3 → 2 nights) and spend 1 night on Koyasan.<br>
+      <strong>Book early:</strong> Ekoin, Kongo Sanmaiin, or Fukuchiin — September fills up fast.<br>
+      <strong>Map:</strong> https://maps.app.goo.gl/eZo5W5w3kEGXe9au7
+    </div>
+  </div>
+
+  <div class="travel-band">
+    <span style="font-size:18px;opacity:0.5">🚄</span>
+    <div class="travel-text"><strong>Shinkansen Osaka → Hiroshima</strong> · ~45 min · ~¥6,000 pp · Sep 10</div>
+  </div>
+</div>
+
+<!-- HIROSHIMA -->
+<div class="phase-section" id="s-hiroshima">
+  <div class="phase-header">
+    <div>
+      <div class="phase-number">04</div>
+      <div class="phase-city">Hiroshima</div>
+      <div class="phase-dates-tag">Sep 10 – Sep 12 · 2 nights</div>
+      <p class="phase-desc">One of Japan's most moving destinations. The Peace Memorial Museum is a profound experience — give it 2–3 hours without rushing. Day two is for Miyajima Island: the floating torii gate, wild deer, fresh oysters, and mountain views.</p>
+    </div>
+    <div class="phase-img"><img src="https://images.unsplash.com/photo-1526481280693-3bfa7568e0f3?w=600&q=80" alt="Hiroshima" loading="lazy" style="width:100%;height:100%;object-fit:cover"></div>
+  </div>
+
+  <div class="hotel-card">
+    <div class="hotel-rating"><div class="hotel-score">4.4</div><div class="hotel-reviews">2,394 reviews</div></div>
+    <div class="hotel-label">Where you're staying</div>
+    <div class="hotel-name">Hilton Hiroshima</div>
+    <div class="hotel-area">Central Hiroshima · Naka Ward, Fujimicho</div>
+    <div class="hotel-grid">
+      <div class="hotel-detail"><strong>Address</strong>11-12 Fujimicho, Naka-ku, Hiroshima</div>
+      <div class="hotel-detail"><strong>Peace Memorial Park</strong>10-min walk</div>
+      <div class="hotel-detail"><strong>Hiroshima Station</strong>10-min drive / tram</div>
+      <div class="hotel-detail"><strong>Opened</strong>2022 — newest flagship Hilton in the region</div>
+    </div>
+    <div class="hotel-note">The best hotel on the trip. Spacious rooms on floors 7–22 with views of the Seto Inland Sea. Spa by L'OCCITANE, indoor pool, sauna, fitness centre, 4 restaurants, and an Executive Lounge on the 21st floor.</div>
+  </div>
+
+  <div class="activities-title">Day 1 — Hiroshima city</div>
+  <div class="activities-grid">
+    <div class="activity-item highlight"><div class="activity-dot"></div><div>Peace Memorial Museum — book online, allow 2–3 hours</div></div>
+    <div class="activity-item"><div class="activity-dot"></div><div>Peace Memorial Park & monuments</div></div>
+    <div class="activity-item"><div class="activity-dot"></div><div>Atomic Bomb Dome — UNESCO World Heritage Site</div></div>
+    <div class="activity-item"><div class="activity-dot"></div><div>Hiroshima Castle</div></div>
+    <div class="activity-item"><div class="activity-dot"></div><div>Dinner: Hiroshima-style okonomiyaki (layered, different from Osaka)</div></div>
+  </div>
+
+  <div class="activities-title" style="margin-top:24px">Day 2 — Miyajima Island</div>
+  <div class="activities-grid">
+    <div class="activity-item highlight"><div class="activity-dot"></div><div>Itsukushima Shrine & floating torii gate — check tide times!</div></div>
+    <div class="activity-item highlight"><div class="activity-dot"></div><div>Wild deer roaming freely — like Nara!</div></div>
+    <div class="activity-item"><div class="activity-dot"></div><div>Ferry from Hiroshima (~30 min train + short ferry, JR Pass)</div></div>
+    <div class="activity-item"><div class="activity-dot"></div><div>Mount Misen ropeway & panoramic views</div></div>
+    <div class="activity-item"><div class="activity-dot"></div><div>Fresh oysters on the island</div></div>
+  </div>
+
+  <div class="travel-band">
+    <span style="font-size:18px;opacity:0.5">🚄</span>
+    <div class="travel-text"><strong>Shinkansen Hiroshima → Tokyo</strong> · ~4h · ~¥19,000 pp · Sep 12</div>
+  </div>
+</div>
+
+<!-- HAKONE + TOKYO II -->
+<div class="phase-section" id="s-hakone">
+  <div class="phase-header">
+    <div>
+      <div class="phase-number">05</div>
+      <div class="phase-city">Hakone + Tokyo II</div>
+      <div class="phase-dates-tag">Sep 12 – Sep 16 · 4 nights</div>
+      <p class="phase-desc">The journey ends gently — two nights in Hakone's onsen village with views of Mount Fuji, then back to Tokyo for final shopping, farewell dinners, and the flight home.</p>
+    </div>
+    <div class="phase-img"><img src="https://images.unsplash.com/photo-1490806843957-31f4c9a91c65?w=600&q=80" alt="Hakone Mount Fuji" loading="lazy" style="width:100%;height:100%;object-fit:cover"></div>
+  </div>
+
+  <div class="hotel-card">
+    <div class="hotel-rating"><div class="hotel-score">4.5</div><div class="hotel-reviews">Couples: 9.4/10</div></div>
+    <div class="hotel-label">Hakone · 2 nights (Sep 12–14)</div>
+    <div class="hotel-name">RoheN HAKONEYUMOTO</div>
+    <div class="hotel-area">Hakone-Yumoto onsen district · Kanagawa</div>
+    <div class="hotel-grid">
+      <div class="hotel-detail"><strong>Address</strong>647 Yumoto, Hakone-machi, Kanagawa</div>
+      <div class="hotel-detail"><strong>Station</strong>6–10 min walk from Hakone-Yumoto Station</div>
+      <div class="hotel-detail"><strong>From Tokyo</strong>~85 min by Romancecar train</div>
+      <div class="hotel-detail"><strong>Open Air Museum</strong>~5km by bus/train</div>
+    </div>
+    <div class="hotel-note">Stylish adults-only boutique property (22 rooms only — book early!). Tatami floors, candlelit atmosphere. Private onsen reservable (fee). Free breakfast and welcome drink. Staff speak English. Couples rate it 9.4/10.</div>
+  </div>
+
+  <div class="activities-title">Hakone highlights</div>
+  <div class="activities-grid">
+    <div class="activity-item highlight"><div class="activity-dot"></div><div>Mount Fuji views — best at sunrise from the lake</div></div>
+    <div class="activity-item highlight"><div class="activity-dot"></div><div>Onsen — go every day, you will get addicted</div></div>
+    <div class="activity-item"><div class="activity-dot"></div><div>Hakone Open Air Museum</div></div>
+    <div class="activity-item"><div class="activity-dot"></div><div>Ropeway over volcanic valley</div></div>
+  </div>
+
+  <div class="travel-band" style="margin:24px 0 16px">
+    <span style="font-size:18px;opacity:0.5">🚃</span>
+    <div class="travel-text"><strong>Romancecar → Tokyo</strong> · ~85 min · Sep 14 → 2 final nights at LYURO</div>
+  </div>
+
+  <div class="hotel-card">
+    <div class="hotel-label">Tokyo · 2 nights (Sep 14–16)</div>
+    <div class="hotel-name">LYURO Tokyo Kiyosumi</div>
+    <div class="hotel-area">by The Share Hotels · same as Phase 1</div>
+    <div class="hotel-note">Back to the riverside hotel. Final days: Harajuku, Omotesando, farewell dinner, and anything missed from Phase 1.</div>
+  </div>
+
+  <div class="travel-band" style="background:#c0392b">
+    <span style="font-size:18px;opacity:0.5">✈️</span>
+    <div class="travel-text"><strong>Tokyo HND → Oslo</strong> · Sep 16, departs 11:05 · arrives 20:15</div>
+  </div>
+</div>
+
+<!-- PRACTICAL -->
+<div class="phase-section" id="s-practical">
+  <div style="font-family:'Shippori Mincho',serif;font-size:36px;font-weight:600;color:var(--ink);margin-bottom:8px">Practical Info</div>
+  <p style="font-size:14px;color:var(--ink3);margin-bottom:32px;font-weight:300">Everything you need to know before you leave Oslo.</p>
+
+  <div class="activities-title">Money & payments</div>
+  <div class="tips-grid" style="margin-bottom:32px">
+    <div class="tip-card"><strong>💴 Cash</strong><p>Always carry ¥10,000–20,000. Many temples, shrines, small restaurants, and markets are cash only. Withdraw at 7-Eleven or Post Office ATMs on arrival.</p></div>
+    <div class="tip-card"><strong>💳 Visa / Mastercard</strong><p>Accepted at all major hotels, department stores, and chain restaurants in cities. Not reliable everywhere — always have cash backup.</p></div>
+    <div class="tip-card"><strong>🚃 Suica IC Card</strong><p>The most useful thing to set up. Tap on/off all trains, buses, subways, convenience stores, vending machines. iPhone: download Welcome Suica app at home. Android: add via Google Pay.</p></div>
+    <div class="tip-card"><strong>💴 JR Pass — buy in Norway</strong><p>Covers all Shinkansen legs + Miyajima ferry. Must buy outside Japan. 14-day pass ~¥50,000. Without it: ~¥55–60,000 pp just for trains. It pays for itself on this route.</p></div>
+    <div class="tip-card"><strong>💸 Revolut / Wise</strong><p>Better exchange rates than airport booths. Set up before departure, use to withdraw yen from ATMs.</p></div>
+    <div class="tip-card"><strong>⚠️ Koyasan note</strong><p>Nankai Railway to Koyasan is NOT covered by JR Pass. Budget ~¥1,500 pp each way.</p></div>
+  </div>
+
+  <div class="activities-title">Apps to download before leaving</div>
+  <div class="tips-grid" style="margin-bottom:32px">
+    <div class="tip-card"><strong>🗺 Google Maps</strong><p>Download offline maps for Tokyo, Kyoto, Osaka, Hiroshima before arrival. Essential for walking.</p></div>
+    <div class="tip-card"><strong>🚄 Japan Travel by Navitime</strong><p>Best for intercity train routes. Shows JR Pass coverage, platform numbers, estimated costs. Better than Google Maps for trains.</p></div>
+    <div class="tip-card"><strong>🔤 Google Translate</strong><p>Download the Japanese language pack offline. Camera mode translates menus and signs in real time — essential in Japan where much is in Japanese only.</p></div>
+    <div class="tip-card"><strong>🧳 Ecbo Cloak</strong><p>Book luggage storage at shops and cafés near stations. Invaluable when moving between cities.</p></div>
+    <div class="tip-card"><strong>📶 eSIM</strong><p>Buy a Japan data eSIM before departure (Airalo or Ubigi). Activate on arrival. Avoids Norwegian roaming charges. Alternative: buy a SIM at the airport.</p></div>
+  </div>
+
+  <div class="activities-title">Book in advance</div>
+  <div class="tips-grid" style="margin-bottom:32px">
+    <div class="tip-card"><strong>🎮 PokePark Kanto Tokyo</strong><p>ticket-en.pokepark-kanto.co.jp</p></div>
+    <div class="tip-card"><strong>🎢 Universal Studios Japan</strong><p>Super Nintendo World has timed entry — book weeks ahead. usj.co.jp</p></div>
+    <div class="tip-card"><strong>☮️ Hiroshima Peace Museum</strong><p>Book online to skip queues. Essential in peak season.</p></div>
+    <div class="tip-card"><strong>🛁 RoheN Hakoneyumoto</strong><p>Only 22 rooms. Book as soon as possible.</p></div>
+    <div class="tip-card"><strong>⛩️ Koyasan temple (if going)</strong><p>Book directly: Ekoin, Kongo Sanmaiin, or Fukuchiin. September is peak season.</p></div>
+  </div>
+
+  <div class="activities-title">Tips from family</div>
+  <div class="tips-grid">
+    <div class="tip-card"><strong>🚲 Rent bikes in Kyoto</strong><p>Best way to explore the temples at your own pace. Shounsai has free bikes.</p></div>
+    <div class="tip-card"><strong>⏰ Go early to temples</strong><p>Kyoto is much more crowded than it was in 2015. Fushimi Inari at sunrise is magical.</p></div>
+    <div class="tip-card"><strong>♨️ Onsen every day</strong><p>You will get completely addicted. Don't be shy — it's completely normal, everyone is naked, nobody cares.</p></div>
+    <div class="tip-card"><strong>📚 Secondhand markets</strong><p>Always great finds in Tokyo. Search Google Maps on the day — best areas: Shimokitazawa, Harajuku.</p></div>
+    <div class="tip-card"><strong>🎰 Pachinko</strong><p>Pop into a pachinko hall at least once. Completely overwhelming in the best way.</p></div>
+    <div class="tip-card"><strong>🏮 Koyasan is unmissable</strong><p>Family rates it the single best experience from all Japan trips. Staying with monks in a mountain temple is unlike anything else.</p></div>
+  </div>
+</div>
+
+</div>
+
+<script>
+function show(id){
+  document.querySelectorAll('.phase-section').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('s-'+id).classList.add('active');
+  const idx=['overview','tokyo1','kyoto','osaka','hiroshima','hakone','practical'];
+  const btns=document.querySelectorAll('.nav-btn');
+  btns[idx.indexOf(id)].classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+</script>
+</body>
+</html>
