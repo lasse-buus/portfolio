@@ -3,6 +3,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600;700&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
@@ -123,14 +124,35 @@ body{font-family:'DM Sans',sans-serif;background:var(--paper);color:var(--ink);m
 .flight-route{font-family:'Shippori Mincho',serif;font-size:18px;color:#fff;margin-bottom:4px}
 .flight-time{font-size:12px;color:rgba(255,255,255,0.5)}
 
+@media(max-width:768px){
+  .hero-title{font-size:48px}
+  .overview-grid{grid-template-columns:1fr 1fr}
+  .content{padding:40px 32px}
+  .phase-nav{padding:0 24px}
+  .intro-block{padding:22px 24px}
+  .hero-content{padding:32px 32px}
+}
+
 @media(max-width:640px){
-  .hero-title{font-size:40px}
+  .hero{height:auto;min-height:300px}
+  .hero-title{font-size:36px}
+  .hero-jp{font-size:56px;right:16px;top:16px}
+  .hero-content{padding:28px 20px}
+  .hero-dates{flex-wrap:wrap;gap:6px 8px}
   .phase-header{grid-template-columns:1fr}
   .phase-img{display:none}
+  .phase-number{font-size:56px}
+  .phase-city{font-size:30px}
+  .phase-dates-tag{font-size:10px}
   .activities-grid,.hotel-grid,.overview-grid,.tips-grid,.flight-grid{grid-template-columns:1fr}
-  .content{padding:32px 24px}
-  .phase-nav{padding:0 24px}
-  .hero-content{padding:28px 24px}
+  .hotel-rating{position:static;text-align:left;margin-bottom:10px}
+  .travel-band{flex-wrap:wrap;gap:6px}
+  .content{padding:24px 16px}
+  .phase-nav{padding:0 16px}
+  .nav-btn{padding:14px 14px;font-size:11px;letter-spacing:0.03em}
+  .intro-block{padding:20px 18px}
+  .optional-block{padding:18px}
+  .ov-city{font-size:17px}
 }
 </style>
 </head>
