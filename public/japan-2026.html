@@ -181,7 +181,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--paper);color:var(--ink);m
   <button class="nav-btn" onclick="show('tokyo1')">Tokyo I</button>
   <button class="nav-btn" onclick="show('kyoto')">Kyoto</button>
   <button class="nav-btn" onclick="show('osaka')">Osaka</button>
-  <button class="nav-btn" onclick="show('hiroshima')">Hiroshima</button>
+  <button class="nav-btn" onclick="show('kanazawa')">Kanazawa</button>
   <button class="nav-btn" onclick="show('hakone')">Hakone + Tokyo II</button>
   <button class="nav-btn" onclick="show('practical')">Practical Info</button>
 </nav>
@@ -192,7 +192,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--paper);color:var(--ink);m
 <div class="phase-section active" id="s-overview">
   <div class="intro-block">
     <h2>The Route</h2>
-    <p>Tokyo → Kyoto → Osaka (+ optional Koyasan) → Hiroshima & Miyajima → Hakone → Tokyo. A 16-night journey through Japan's most iconic cities, a sacred mountain monastery, floating torii gates, and a night soaking in volcanic hot springs with views of Mount Fuji.</p>
+    <p>Tokyo → Kyoto → Osaka (+ optional Koyasan) → Kanazawa → Hakone → Tokyo. A 16-night journey through Japan's most iconic cities, a samurai and geisha city off the tourist trail, a sacred mountain monastery, and a night soaking in volcanic hot springs with views of Mount Fuji.</p>
     <div class="flight-grid">
       <div class="flight-box">
         <div class="flight-label">Outbound</div>
@@ -235,13 +235,13 @@ body{font-family:'DM Sans',sans-serif;background:var(--paper);color:var(--ink);m
         <div class="ov-nights">🌙 3 nights · Candeo The Tower</div>
       </div>
     </div>
-    <div class="ov-card" onclick="show('hiroshima')">
-      <div class="ov-img"><img src="https://images.unsplash.com/photo-1526481280693-3bfa7568e0f3?w=400&q=80" alt="Hiroshima" loading="lazy"></div>
+    <div class="ov-card" onclick="show('kanazawa')">
+      <div class="ov-img"><img src="https://images.unsplash.com/photo-1624601573012-efb68931cc8f?w=400&q=80" alt="Kanazawa" loading="lazy"></div>
       <div class="ov-body">
         <div class="ov-phase">Phase 4</div>
-        <div class="ov-city">Hiroshima</div>
+        <div class="ov-city">Kanazawa</div>
         <div class="ov-dates">Sep 10 – Sep 12</div>
-        <div class="ov-nights">🌙 2 nights · Hilton Hiroshima</div>
+        <div class="ov-nights">🌙 2 nights · KUMU by The Share Hotels</div>
       </div>
     </div>
     <div class="ov-card" onclick="show('hakone')">
@@ -278,7 +278,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--paper);color:var(--ink);m
       <span>Osaka</span>
       <span style="color:rgba(255,255,255,0.3);font-size:11px">(+Koyasan?)</span>
       <span style="color:rgba(255,255,255,0.3)">⟶</span>
-      <span>Hiroshima</span>
+      <span>Kanazawa</span>
       <span style="color:rgba(255,255,255,0.3)">⟶</span>
       <span>Hakone</span>
       <span style="color:rgba(255,255,255,0.3)">⟶</span>
@@ -304,7 +304,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--paper);color:var(--ink);m
   <div class="hotel-card">
     <div class="hotel-rating"><div class="hotel-score">4.4</div><div class="hotel-reviews">738 reviews</div></div>
     <div class="hotel-label">Where you're staying</div>
-    <div class="hotel-name">LYURO Tokyo Kiyosumi</div>
+    <div class="hotel-name"><a href="https://www.thesharehotels.com/lyuro/" target="_blank" style="color:inherit;text-decoration:none;border-bottom:1px solid var(--paper2)">LYURO Tokyo Kiyosumi ↗</a></div>
     <div class="hotel-area">by The Share Hotels · Kiyosumi-Shirakawa, Koto-ku</div>
     <div class="hotel-grid">
       <div class="hotel-detail"><strong>Address</strong>1-1-7 Kiyosumi, Koto-ku, Tokyo</div>
@@ -350,7 +350,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--paper);color:var(--ink);m
   <div class="hotel-card">
     <div class="hotel-rating"><div class="hotel-score">4.5</div><div class="hotel-reviews">Booking.com · 9.5 location</div></div>
     <div class="hotel-label">Where you're staying</div>
-    <div class="hotel-name">Shounsai</div>
+    <div class="hotel-name"><a href="https://www.airbnb.com/rooms/shounsai-kyoto" target="_blank" style="color:inherit;text-decoration:none;border-bottom:1px solid var(--paper2)">Shounsai ↗</a></div>
     <div class="hotel-area">Traditional machiya townhouse · Nakagyo-ku, Kyoto</div>
     <div class="hotel-grid">
       <div class="hotel-detail"><strong>Address</strong>653-1 Sanjoinokuma-cho, Nakagyo-ku</div>
@@ -392,7 +392,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--paper);color:var(--ink);m
   <div class="hotel-card">
     <div class="hotel-rating"><div class="hotel-score">4.1</div><div class="hotel-reviews">1,039 reviews</div></div>
     <div class="hotel-label">Where you're staying</div>
-    <div class="hotel-name">Candeo Hotels Osaka The Tower</div>
+    <div class="hotel-name"><a href="https://www.candeohotels.com/en/osaka-the-tower/" target="_blank" style="color:inherit;text-decoration:none;border-bottom:1px solid var(--paper2)">Candeo Hotels Osaka The Tower ↗</a></div>
     <div class="hotel-area">Umeda / Kita-ku · Dojimahama, Osaka</div>
     <div class="hotel-grid">
       <div class="hotel-detail"><strong>Address</strong>1-1-27 Dojimahama, Kita-ku, Osaka</div>
@@ -427,57 +427,70 @@ body{font-family:'DM Sans',sans-serif;background:var(--paper);color:var(--ink);m
 
   <div class="travel-band">
     <span style="font-size:18px;opacity:0.5">🚄</span>
-    <div class="travel-text"><strong>Shinkansen Osaka → Hiroshima</strong> · ~45 min · ~¥6,000 pp · Sep 10</div>
+    <div class="travel-text"><strong>Thunderbird + Hokuriku Shinkansen Osaka → Kanazawa</strong> · ~2h 20min · ~¥9,500 pp · Sep 10</div>
   </div>
 </div>
 
-<!-- HIROSHIMA -->
-<div class="phase-section" id="s-hiroshima">
+<!-- KANAZAWA -->
+<div class="phase-section" id="s-kanazawa">
   <div class="phase-header">
     <div>
       <div class="phase-number">04</div>
-      <div class="phase-city">Hiroshima</div>
+      <div class="phase-city">Kanazawa</div>
       <div class="phase-dates-tag">Sep 10 – Sep 12 · 2 nights</div>
-      <p class="phase-desc">One of Japan's most moving destinations. The Peace Memorial Museum is a profound experience — give it 2–3 hours without rushing. Day two is for Miyajima Island: the floating torii gate, wild deer, fresh oysters, and mountain views.</p>
+      <p class="phase-desc">Japan's best-kept secret — samurai districts, geisha tea houses, one of the country's top three gardens, and a seafood scene that rivals Tokyo. Far fewer tourists than Kyoto, yet just as culturally rich. September means the start of nodoguro season — the city's prized fish.</p>
     </div>
-    <div class="phase-img"><img src="https://images.unsplash.com/photo-1526481280693-3bfa7568e0f3?w=600&q=80" alt="Hiroshima" loading="lazy" style="width:100%;height:100%;object-fit:cover"></div>
+    <div class="phase-img"><img src="https://images.unsplash.com/photo-1624601573012-efb68931cc8f?w=600&q=80" alt="Kanazawa" loading="lazy" style="width:100%;height:100%;object-fit:cover"></div>
   </div>
 
   <div class="hotel-card">
-    <div class="hotel-rating"><div class="hotel-score">4.4</div><div class="hotel-reviews">2,394 reviews</div></div>
+    <div class="hotel-rating"><div class="hotel-score">8.9</div><div class="hotel-reviews">Couples: 9.3/10</div></div>
     <div class="hotel-label">Where you're staying</div>
-    <div class="hotel-name">Hilton Hiroshima</div>
-    <div class="hotel-area">Central Hiroshima · Naka Ward, Fujimicho</div>
+    <div class="hotel-name"><a href="https://www.thesharehotels.com/kumu/" target="_blank" style="color:inherit;text-decoration:none;border-bottom:1px solid var(--paper2)">KUMU Kanazawa by The Share Hotels ↗</a></div>
+    <div class="hotel-area">Central Kanazawa · Kamitsutsumicho</div>
     <div class="hotel-grid">
-      <div class="hotel-detail"><strong>Address</strong>11-12 Fujimicho, Naka-ku, Hiroshima</div>
-      <div class="hotel-detail"><strong>Peace Memorial Park</strong>10-min walk</div>
-      <div class="hotel-detail"><strong>Hiroshima Station</strong>10-min drive / tram</div>
-      <div class="hotel-detail"><strong>Opened</strong>2022 — newest flagship Hilton in the region</div>
+      <div class="hotel-detail"><strong>Address</strong>2-40 Kamitsutsumicho, Kanazawa 920-0869</div>
+      <div class="hotel-detail"><strong>Station</strong>20-min walk or 8-min drive from Kanazawa Station</div>
+      <div class="hotel-detail"><strong>Oyama Shrine</strong>4-min walk · Omicho Market 6-min walk</div>
+      <div class="hotel-detail"><strong>Loop Bus</strong>Stop directly outside — covers all major sights</div>
     </div>
-    <div class="hotel-note">The best hotel on the trip. Spacious rooms on floors 7–22 with views of the Seto Inland Sea. Spa by L'OCCITANE, indoor pool, sauna, fitness centre, 4 restaurants, and an Executive Lounge on the 21st floor.</div>
+    <div class="hotel-note">Same brand as LYURO Tokyo (The Share Hotels) — same stylish ethos, local art on every floor, incense throughout. Tea salon "KISSA & Co." on site celebrating Kanazawa's Zen tradition. Rooftop wooden deck with Kanazawa Castle Park views. Complimentary Japanese breakfast. Described by one guest as "the best smelling hotel I've ever stayed in."</div>
   </div>
 
-  <div class="activities-title">Day 1 — Hiroshima city</div>
+  <div class="activities-title">Day 1 — The historic city</div>
   <div class="activities-grid">
-    <div class="activity-item highlight"><div class="activity-dot"></div><div>Peace Memorial Museum — book online, allow 2–3 hours</div></div>
-    <div class="activity-item"><div class="activity-dot"></div><div>Peace Memorial Park & monuments</div></div>
-    <div class="activity-item"><div class="activity-dot"></div><div>Atomic Bomb Dome — UNESCO World Heritage Site</div></div>
-    <div class="activity-item"><div class="activity-dot"></div><div>Hiroshima Castle</div></div>
-    <div class="activity-item"><div class="activity-dot"></div><div>Dinner: Hiroshima-style okonomiyaki (layered, different from Osaka)</div></div>
+    <div class="activity-item highlight"><div class="activity-dot"></div><div>Kenroku-en Garden — one of Japan's top 3 gardens. Go early morning.</div></div>
+    <div class="activity-item highlight"><div class="activity-dot"></div><div>Higashi Chaya Geisha District — Edo-period tea houses, far less crowded than Gion</div></div>
+    <div class="activity-item"><div class="activity-dot"></div><div>Kanazawa Castle Park — free, adjacent to Kenroku-en, beautiful grounds</div></div>
+    <div class="activity-item"><div class="activity-dot"></div><div>Nagamachi Samurai District — earthen walls, narrow lanes, Nomura-ke samurai residence inside</div></div>
+    <div class="activity-item"><div class="activity-dot"></div><div>Oyama Shrine — unusual Japanese/European architecture, 4-min walk from hotel</div></div>
+    <div class="activity-item"><div class="activity-dot"></div><div>Loop Bus day pass ¥1,000 covers all sights — stop right outside hotel</div></div>
   </div>
 
-  <div class="activities-title" style="margin-top:24px">Day 2 — Miyajima Island</div>
+  <div class="activities-title" style="margin-top:8px">Day 2 — Food, art & culture</div>
   <div class="activities-grid">
-    <div class="activity-item highlight"><div class="activity-dot"></div><div>Itsukushima Shrine & floating torii gate — check tide times!</div></div>
-    <div class="activity-item highlight"><div class="activity-dot"></div><div>Wild deer roaming freely — like Nara!</div></div>
-    <div class="activity-item"><div class="activity-dot"></div><div>Ferry from Hiroshima (~30 min train + short ferry, JR Pass)</div></div>
-    <div class="activity-item"><div class="activity-dot"></div><div>Mount Misen ropeway & panoramic views</div></div>
-    <div class="activity-item"><div class="activity-dot"></div><div>Fresh oysters on the island</div></div>
+    <div class="activity-item highlight"><div class="activity-dot"></div><div>Omicho Market — Kanazawa's seafood market. Better than Nishiki or Kuromon. Arrive at 11:30am for Morimori Sushi.</div></div>
+    <div class="activity-item"><div class="activity-dot"></div><div>21st Century Museum of Contemporary Art — world-class circular museum, iconic "Swimming Pool" installation</div></div>
+    <div class="activity-item"><div class="activity-dot"></div><div>D.T. Suzuki Museum — serene Zen philosophy museum, beautiful Water Mirror Garden</div></div>
+    <div class="activity-item"><div class="activity-dot"></div><div>Ishikawa Prefectural Museum of Art — 1.3km from hotel</div></div>
+  </div>
+
+  <div class="optional-block" style="margin-top:8px">
+    <div class="optional-tag">🍣 Where to eat</div>
+    <div class="optional-title">Kanazawa food guide</div>
+    <p class="optional-desc">Kanazawa is considered one of Japan's top food cities. The Sea of Japan brings exceptional seafood — September means the start of nodoguro (blackthroat seaperch) season, the city's prized fish.</p>
+    <div class="optional-detail">
+      <strong>Lunch — Morimori Sushi (Omicho Market):</strong> Famous conveyor belt sushi using the morning's market catch. Hokuriku sweet shrimp, sea urchin, seasonal nigiri at reasonable prices. Arrive 11:30am to beat the queue.<br><br>
+      <strong>Lunch — TILE:</strong> Seafood rice bowl in a renovated 110-year-old machiya. ~30 toppings to choose from, beautifully presented. Modern Japanese.<br><br>
+      <strong>Dinner — Tachiguisushi Yusho:</strong> Hokuriku's first stand-up sushi bar, supervised by the chef behind a 2-Michelin-star restaurant. Ranked Japan Restaurant Award "Best 100" 2025. Casual format, world-class fish.<br><br>
+      <strong>Dinner — Kourin Sushi:</strong> Long-established (1951), English menu with photos, Kanazawa seafood sourced daily. Great sake from Ishikawa Prefecture. Closed Wed/Sun.<br><br>
+      <strong>Must-try local dishes:</strong> Nodoguro (blackthroat seaperch) · Kanazawa oden · Jibuni (duck stew) · Noto Beef · Local Ishikawa sake
+    </div>
   </div>
 
   <div class="travel-band">
     <span style="font-size:18px;opacity:0.5">🚄</span>
-    <div class="travel-text"><strong>Shinkansen Hiroshima → Tokyo</strong> · ~4h · ~¥19,000 pp · Sep 12</div>
+    <div class="travel-text"><strong>Hokuriku Shinkansen Kanazawa → Tokyo</strong> · ~2h 28min · ~¥14,000 pp · Sep 12 · Covered by JR Pass</div>
   </div>
 </div>
 
@@ -496,7 +509,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--paper);color:var(--ink);m
   <div class="hotel-card">
     <div class="hotel-rating"><div class="hotel-score">4.5</div><div class="hotel-reviews">Couples: 9.4/10</div></div>
     <div class="hotel-label">Hakone · 2 nights (Sep 12–14)</div>
-    <div class="hotel-name">RoheN HAKONEYUMOTO</div>
+    <div class="hotel-name"><a href="https://rohen.jp/hakoneyumoto/" target="_blank" style="color:inherit;text-decoration:none;border-bottom:1px solid var(--paper2)">RoheN HAKONEYUMOTO ↗</a></div>
     <div class="hotel-area">Hakone-Yumoto onsen district · Kanagawa</div>
     <div class="hotel-grid">
       <div class="hotel-detail"><strong>Address</strong>647 Yumoto, Hakone-machi, Kanagawa</div>
@@ -522,7 +535,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--paper);color:var(--ink);m
 
   <div class="hotel-card">
     <div class="hotel-label">Tokyo · 2 nights (Sep 14–16)</div>
-    <div class="hotel-name">LYURO Tokyo Kiyosumi</div>
+    <div class="hotel-name"><a href="https://www.thesharehotels.com/lyuro/" target="_blank" style="color:inherit;text-decoration:none;border-bottom:1px solid var(--paper2)">LYURO Tokyo Kiyosumi ↗</a></div>
     <div class="hotel-area">by The Share Hotels · same as Phase 1</div>
     <div class="hotel-note">Back to the riverside hotel. Final days: Harajuku, Omotesando, farewell dinner, and anything missed from Phase 1.</div>
   </div>
@@ -543,14 +556,14 @@ body{font-family:'DM Sans',sans-serif;background:var(--paper);color:var(--ink);m
     <div class="tip-card"><strong>💴 Cash</strong><p>Always carry ¥10,000–20,000. Many temples, shrines, small restaurants, and markets are cash only. Withdraw at 7-Eleven or Post Office ATMs on arrival.</p></div>
     <div class="tip-card"><strong>💳 Visa / Mastercard</strong><p>Accepted at all major hotels, department stores, and chain restaurants in cities. Not reliable everywhere — always have cash backup.</p></div>
     <div class="tip-card"><strong>🚃 Suica IC Card</strong><p>The most useful thing to set up. Tap on/off all trains, buses, subways, convenience stores, vending machines. iPhone: download Welcome Suica app at home. Android: add via Google Pay.</p></div>
-    <div class="tip-card"><strong>💴 JR Pass — buy in Norway</strong><p>Covers all Shinkansen legs + Miyajima ferry. Must buy outside Japan. 14-day pass ~¥50,000. Without it: ~¥55–60,000 pp just for trains. It pays for itself on this route.</p></div>
+    <div class="tip-card"><strong>💴 JR Pass — buy in Norway</strong><p>Covers all Shinkansen legs including Kanazawa (Hokuriku Shinkansen). Must buy outside Japan. 14-day pass ~¥50,000. Without it: ~¥55–60,000 pp just for trains. It pays for itself.</p></div>
     <div class="tip-card"><strong>💸 Revolut / Wise</strong><p>Better exchange rates than airport booths. Set up before departure, use to withdraw yen from ATMs.</p></div>
     <div class="tip-card"><strong>⚠️ Koyasan note</strong><p>Nankai Railway to Koyasan is NOT covered by JR Pass. Budget ~¥1,500 pp each way.</p></div>
   </div>
 
   <div class="activities-title">Apps to download before leaving</div>
   <div class="tips-grid" style="margin-bottom:32px">
-    <div class="tip-card"><strong>🗺 Google Maps</strong><p>Download offline maps for Tokyo, Kyoto, Osaka, Hiroshima before arrival. Essential for walking.</p></div>
+    <div class="tip-card"><strong>🗺 Google Maps</strong><p>Download offline maps for Tokyo, Kyoto, Osaka, Kanazawa before arrival. Essential for walking.</p></div>
     <div class="tip-card"><strong>🚄 Japan Travel by Navitime</strong><p>Best for intercity train routes. Shows JR Pass coverage, platform numbers, estimated costs. Better than Google Maps for trains.</p></div>
     <div class="tip-card"><strong>🔤 Google Translate</strong><p>Download the Japanese language pack offline. Camera mode translates menus and signs in real time — essential in Japan where much is in Japanese only.</p></div>
     <div class="tip-card"><strong>🧳 Ecbo Cloak</strong><p>Book luggage storage at shops and cafés near stations. Invaluable when moving between cities.</p></div>
@@ -561,7 +574,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--paper);color:var(--ink);m
   <div class="tips-grid" style="margin-bottom:32px">
     <div class="tip-card"><strong>🎮 PokePark Kanto Tokyo</strong><p>ticket-en.pokepark-kanto.co.jp</p></div>
     <div class="tip-card"><strong>🎢 Universal Studios Japan</strong><p>Super Nintendo World has timed entry — book weeks ahead. usj.co.jp</p></div>
-    <div class="tip-card"><strong>☮️ Hiroshima Peace Museum</strong><p>Book online to skip queues. Essential in peak season.</p></div>
+    <div class="tip-card"><strong>🏯 KUMU Kanazawa</strong><p>Book directly at thesharehotels.com/kumu/ — central location, fills up. Same brand as LYURO Tokyo.</p></div>
     <div class="tip-card"><strong>🛁 RoheN Hakoneyumoto</strong><p>Only 22 rooms. Book as soon as possible.</p></div>
     <div class="tip-card"><strong>⛩️ Koyasan temple (if going)</strong><p>Book directly: Ekoin, Kongo Sanmaiin, or Fukuchiin. September is peak season.</p></div>
   </div>
@@ -584,7 +597,7 @@ function show(id){
   document.querySelectorAll('.phase-section').forEach(s=>s.classList.remove('active'));
   document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
   document.getElementById('s-'+id).classList.add('active');
-  const idx=['overview','tokyo1','kyoto','osaka','hiroshima','hakone','practical'];
+  const idx=['overview','tokyo1','kyoto','osaka','kanazawa','hakone','practical'];
   const btns=document.querySelectorAll('.nav-btn');
   btns[idx.indexOf(id)].classList.add('active');
   window.scrollTo({top:0,behavior:'smooth'});
