@@ -79,7 +79,7 @@ const Navbar = () => {
 					/>
 				</button>
 				<a
-					href="https://github.com/nettmaker-lasse"
+					href="https://github.com/lasse-buus"
 					target="_blank"
 					rel="noopener noreferrer"
 					className="text-gray-900 dark:text-gray-100 hover:text-synthPink dark:hover:text-synthPink"

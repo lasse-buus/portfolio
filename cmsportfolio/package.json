@@ -4,7 +4,7 @@
   "version": "1.0.0",
   "description": "",
   "main": "package.json",
-  "author": "nettmaker-lasse <lasse.buus@nettmaker.no>",
+  "author": "lasse-buus <lassebuus91@gmail.com>",
   "license": "UNLICENSED",
   "scripts": {
     "dev": "sanity dev",
@@ -24,6 +24,6 @@
   },
   "repository": {
     "type": "git",
-    "url": "git@github.com:nettmaker-lasse/portfolio.git"
+    "url": "git@github.com:lasse-buus/portfolio.git"
   }
 }
