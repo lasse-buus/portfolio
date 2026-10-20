@@ -6,6 +6,18 @@ const userData = {
 	email: "lassebuus91@gmail.com",
 	phone: "+47 91905635",
 	address: "Oslo, Norway",
+	// Front page hero
+	role: "Frontend Developer & UX/UI Designer",
+	intro: "I design and build websites, design systems and digital products — from the first Figma frame to production code. Nearly seven years of agency work across React, Next.js, Sanity and WordPress.",
+	// Shown in the marquee strip under the hero
+	ticker: [
+		"Frontend Developer",
+		"UX/UI Designer",
+		"Design systems",
+		"React · Next.js · TypeScript",
+		"Sanity · WordPress",
+		"Oslo, Norway",
+	],
 	projects: [
 		{
 			title: "Project title",

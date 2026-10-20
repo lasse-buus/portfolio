@@ -1,64 +1,68 @@
 import imageUrlBuilder from "@sanity/image-url";
-import { useState, useEffect } from "react";
+import Image from "next/image";
+import Link from "next/link";
 import BlockContent from "@sanity/block-content-to-react";
 import ContainerBlock from "../../components/ContainerBlock";
+import PageHeader from "@components/grid/PageHeader";
+import client from "@lib/sanity";
 
-export const Project = ({
-	title,
-	body,
-	image,
-	projectstatus,
-	content,
-	caption,
-}) => {
+const builder = imageUrlBuilder(client);
 
-	const [imageUrl, setImageUrl] = useState(null);
+const serializers = {
+	marks: {
+		internalLink: ({ mark, children }) => {
+			const { slug = {} } = mark;
+			return <a href={`/${slug.current}`}>{children}</a>;
+		},
+		link: ({ mark, children }) => {
+			const { blank, href } = mark;
+			return blank ? (
+				<a href={href} target="_blank" rel="noopener noreferrer">
+					{children}
+				</a>
+			) : (
+				<a href={href}>{children}</a>
+			);
+		},
+	},
+};
 
-	useEffect(() => {
-		const imgBuilder = imageUrlBuilder({
-			projectId: "vn88o3gc",
-			dataset: "production",
-		});
-
-		setImageUrl(imgBuilder.image(image));
-	}, [image]);
-
+export const Project = ({ title, image, projectstatus, content, caption }) => {
 	return (
-		<ContainerBlock title="Lasse Buus - Blog">
-			<div>
-				<div className="">
-					<div className="relative max-w-6xl mx-auto">
-						<div className="relative border full-w-image max-h-[400px] md:max-h-full">
-						{imageUrl && (
-							<img
-							className="object-cover h-[400px] w-full sm:h-full"
-								src={imageUrl}
-						/>
-						)}
-						</div>
-						<div className="absolute bottom-8 left-8">
-							<span className="relative p-3 my-6 text-sm font-semibold text-white bottom-3 bold bg-synthPink">
-								{caption}
-							</span>
-							<span className="relative p-3 my-6 ml-2 text-sm font-semibold text-black bg-white bottom-3 bold">
-								{projectstatus}
-							</span>
-						</div>
+		<ContainerBlock bleed title={`${title} - Lasse Buus`}>
+			<PageHeader label="Project" meta={projectstatus} title={title} dot={false} size="md">
+				<Link href="/projects" className="inline-flex items-center gap-2 mt-8 label text-ink hover:text-brand-ink">
+					<span aria-hidden="true">←</span> All projects
+				</Link>
+			</PageHeader>
+
+			{image ? (
+				<section className="rule">
+					<div className="p-4 frame sm:p-6">
+						<figure>
+							<div className="media aspect-w-16 aspect-h-9">
+								<Image
+									src={builder.image(image).width(2000).auto("format").url()}
+									alt={caption || title}
+									fill
+									priority
+									sizes="(max-width: 1240px) 100vw, 1200px"
+									className="object-cover"
+								/>
+							</div>
+							{caption ? <figcaption className="mt-3 label">↳ {caption}</figcaption> : null}
+						</figure>
 					</div>
-					<div></div>
-					<div className="max-w-2xl mx-auto">
-						<h1 className="my-6 text-3xl font-bold text-left md:text-5xl md:my-12 dark:text-white">
-							{title}
-						</h1>
-					</div>
-					<div className="max-w-2xl mx-auto font-sans leading-6 tracking-tight">
-						<BlockContent
-							blocks={content}
-							className="dark:text-white"
-						/>
-					</div>
+				</section>
+			) : null}
+
+			<section className="rule">
+				<div className="px-4 py-12 frame sm:px-6 md:py-20">
+					<article className="max-w-2xl mx-auto">
+						<BlockContent blocks={content} serializers={serializers} className="blog-content" />
+					</article>
 				</div>
-			</div>
+			</section>
 		</ContainerBlock>
 	);
 };
@@ -67,34 +71,28 @@ export const getServerSideProps = async (pageContext) => {
 	const pageSlug = pageContext.query.slug;
 
 	if (!pageSlug) {
-		return {
-			notFound: true,
-		};
+		return { notFound: true };
 	}
 
-	const query = encodeURIComponent(
-		`*[ _type == "projects" && slug.current == "${pageSlug}" ]`
-	);
+	const query = encodeURIComponent(`*[ _type == "projects" && slug.current == "${pageSlug}" ]`);
 	const url = `https://vn88o3gc.api.sanity.io/v1/data/query/production?query=${query}`;
 
 	const result = await fetch(url).then((res) => res.json());
-	const project = result.result[0];
+	const project = result?.result?.[0];
 
 	if (!project) {
-		return {
-			notFound: true,
-		};
-	} else {
-		return {
-			props: {
-				projectstatus: project.status,
-				title: project.title,
-				image: project.image,
-				content: project.blockText,
-				caption: project.imagecaption,
-			},
-		};
+		return { notFound: true };
 	}
+
+	return {
+		props: {
+			projectstatus: project.status || null,
+			title: project.title,
+			image: project.image || null,
+			content: project.blockText || [],
+			caption: project.imagecaption || null,
+		},
+	};
 };
 
 export default Project;

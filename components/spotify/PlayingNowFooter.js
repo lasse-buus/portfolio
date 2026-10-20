@@ -2,37 +2,33 @@ import React from "react";
 import useSWR from "swr";
 import { SiSpotify } from "react-icons/si";
 
+const fetcher = (url) => fetch(url).then((r) => r.json());
+const PROFILE_URL = "https://open.spotify.com/user/113671250?si=73f1c554e0544785";
+
 export default function PlayingNowFooter() {
-	const fetcher = (url) => fetch(url).then((r) => r.json());
 	const { data } = useSWR("/api/spotify", fetcher);
+	const playing = Boolean(data?.isPlaying);
 
 	return (
-		<section className="w-50 lg:w-4/12">
-			<main className="flex flex-col items-start justify-center">
-				<a
-					target="_blank"
-					rel="noopener noreferer"
-					href={
-						data?.isPlaying
-							? data.songUrl
-							: "https://open.spotify.com/user/113671250?si=73f1c554e0544785"
-					}
-					className="relative flex items-center p-4 space-x-4 w-[100%] transition-shadow rounded-md"
-				>
-					<div className="w-6">
-						<SiSpotify size={24} color={"#a5edb6"} />
-					</div>
-
-					<div className="flex-1">
-						<p className="font-bold component dark:text-white">
-							{data?.isPlaying ? data.title : "Not Listening"}
-						</p>
-						<p className="text-xs font-dark dark:text-white">
-							{data?.isPlaying ? data.artist : "Spotify"}
-						</p>
-					</div>
-				</a>
-			</main>
-		</section>
+		<a
+			target="_blank"
+			rel="noopener noreferrer"
+			href={playing ? data.songUrl : PROFILE_URL}
+			className="flex items-center min-w-0 gap-3 group"
+		>
+			<span className="relative flex items-center justify-center flex-none w-9 h-9 overflow-hidden border rounded-md border-line bg-surface">
+				{playing && data?.albumImageUrl ? (
+					<img src={data.albumImageUrl} alt={data.album || ""} className="object-cover w-full h-full" />
+				) : (
+					<SiSpotify size={16} className="text-[#1DB954]" />
+				)}
+			</span>
+			<span className="min-w-0">
+				<span className="block label">{playing ? "Now playing" : "Spotify"}</span>
+				<span className="block text-sm font-medium truncate text-ink group-hover:text-brand-ink">
+					{playing ? `${data.title} — ${data.artist}` : "Not listening right now"}
+				</span>
+			</span>
+		</a>
 	);
 }

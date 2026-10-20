@@ -1,94 +1,45 @@
 import React from "react";
-import userData from "@constants/data";
 import Image from "next/image";
+import userData from "@constants/data";
+import Section from "@components/grid/Section";
 
-export default function CodeStack() {
+// Black logos that need flipping in dark mode
+const INVERT_IN_DARK = new Set(["NextJS", "GitHub", "WordPress"]);
+
+const groups = [
+	{ label: "Code", items: userData.frontendCode.map((s) => ({ name: s.language, url: s.url })) },
+	{ label: "Design tools", items: userData.frontendDesign.map((s) => ({ name: s.design, url: s.url })) },
+	{ label: "Productivity", items: userData.frontendOthers.map((s) => ({ name: s.other, url: s.url })) },
+];
+
+export default function CodeStack({ index, total }) {
 	return (
-		<div className="">
-			<div className="block max-w-6xl mx-auto my-14">
-				<div className="flex flex-wrap content-between">
-					<div className="w-full max-w-2xl mx-auto mb-4">
-						<div className="relative">
-							<h3 className="inline-block mb-6 text-2xl font-medium text-black dark:text-white">
-								Code stack
-							</h3>
-						</div>
-						<div className="grid items-center justify-between grid-cols-4 gap-10 sm:grid-cols-7">
-							{userData.frontendCode.map((skill, idx) => (
-								<SkillCard
-									key={idx}
-									title={skill.language}
-									url={skill.url}
-								/>
-							))}
-						</div>
+		<Section index={index} total={total} label="Stack">
+			{groups.map((group, gi) => (
+				<div key={group.label} className={gi > 0 ? "border-t border-line" : ""}>
+					<div className="flex items-center justify-between px-4 py-3 border-b sm:px-6 border-line">
+						<span className="label text-ink">{group.label}</span>
+						<span className="label">{String(group.items.length).padStart(2, "0")}</span>
 					</div>
-					<div className="w-full max-w-2xl mx-auto mt-20 mb-4">
-						<h3 className="inline-block mb-6 text-2xl font-medium text-black dark:text-white">
-							Design tools
-						</h3>
-						<div className="grid items-center justify-between grid-cols-4 gap-10 sm:grid-cols-7">
-							{userData.frontendDesign.map((skill, idx) => (
-								<ToolCard
-									key={idx}
-									title={skill.language}
-									url={skill.url}
-								/>
-							))}
-						</div>
-					</div>
-					<div className="w-full max-w-2xl mx-auto mt-20 mb-4">
-						<h3 className="inline-block mb-6 text-2xl font-medium text-black dark:text-white">
-							Productive tools
-						</h3>
-						<div className="grid items-center justify-between grid-cols-4 gap-10 sm:grid-cols-7">
-							{userData.frontendOthers.map((skill, idx) => (
-								<OtherCard
-									key={idx}
-									title={skill.language}
-									url={skill.url}
-								/>
-							))}
-						</div>
-					</div>
+					<ul className="grid grid-cols-2 cell-grid sm:grid-cols-4 lg:grid-cols-6">
+						{group.items.map((item) => (
+							<li key={item.name} className="flex items-center gap-3 px-4 h-16 sm:px-6">
+								<span className="relative flex-none w-7 h-7">
+									<Image
+										src={item.url}
+										alt=""
+										fill
+										sizes="28px"
+										style={{ objectFit: "contain" }}
+										className={INVERT_IN_DARK.has(item.name) ? "dark:invert" : ""}
+									/>
+								</span>
+								<span className="text-sm font-medium truncate text-ink">{item.name}</span>
+							</li>
+						))}
+					</ul>
 				</div>
-			</div>
-		</div>
+			))}
+		</Section>
 	);
 }
-
-const SkillCard = ({ title, url }) => {
-	return (
-		<div className="relative w-16 h-16">
-			<Image
-				src={url}
-				fill
-				style={{ objectFit: "contain" }}
-			/>
-		</div>
-	);
-};
-
-const ToolCard = ({ title, url }) => {
-	return (
-		<div className="relative w-16 h-16">
-			<Image
-				src={url}
-				fill
-				style={{ objectFit: "contain" }}
-			/>
-		</div>
-	);
-};
-
-const OtherCard = ({ title, url }) => {
-	return (
-		<div className="relative w-16 h-16">
-			<Image
-				src={url}
-				fill
-				style={{ objectFit: "contain" }}
-			/>
-		</div>
-	);
-};

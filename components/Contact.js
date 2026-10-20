@@ -1,148 +1,121 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import userData from "@constants/data";
-// import emailjs from "@emailjs/browser";
 import emailjs from "emailjs-com";
 import Swal from "sweetalert2";
+import Section from "@components/grid/Section";
 
 const SERVICE_ID = process.env.NEXT_PUBLIC_SERVICE_ID;
 const TEMPLATE_ID = process.env.NEXT_PUBLIC_TEMPLATE_ID;
 const USER_ID = process.env.NEXT_PUBLIC_USER_ID;
 
-export default function Contact() {
+const details = [
+	{ label: "Email", value: userData.email, href: `mailto:${userData.email}` },
+	{ label: "Phone", value: userData.phone, href: `tel:${userData.phone.replace(/\s+/g, "")}` },
+	{ label: "Location", value: userData.address },
+	{ label: "LinkedIn", value: "Lasse Buus Nielsen", href: userData.socialLinks.linkedin, external: true },
+	{ label: "GitHub", value: `@${userData.githubUsername}`, href: `https://github.com/${userData.githubUsername}`, external: true },
+];
+
+const fieldClass =
+	"w-full px-3 mt-2 text-[15px] rounded-md border border-line bg-page text-ink placeholder-gray-400 transition focus:outline-none focus:border-ink";
+
+export default function Contact({ index, total }) {
 	const form = useRef();
+	const [sending, setSending] = useState(false);
 
 	const sendEmail = (e) => {
 		e.preventDefault();
-		emailjs.sendForm(SERVICE_ID, TEMPLATE_ID, form.current, USER_ID).then(
-			(result) => {
-				Swal.fire({
-					icon: "success",
-					title: "Message sent successfully",
-					text: "I will get in touch with you soon!",
-				});
-			},
-			(error) => {
-				Swal.fire({
-					icon: "error",
-					title: "Ooops, something went wrong",
-					text: error.text,
-				});
-			}
-		);
-		e.target.reset();
+		setSending(true);
+		const target = e.target;
+
+		emailjs
+			.sendForm(SERVICE_ID, TEMPLATE_ID, form.current, USER_ID)
+			.then(
+				() => {
+					Swal.fire({
+						icon: "success",
+						title: "Message sent successfully",
+						text: "I will get in touch with you soon!",
+					});
+					target.reset();
+				},
+				(error) => {
+					Swal.fire({
+						icon: "error",
+						title: "Ooops, something went wrong",
+						text: error.text,
+					});
+				}
+			)
+			.finally(() => setSending(false));
 	};
 
 	return (
-		<section>
-			<div className="max-w-2xl mx-auto antialiased">
-				<h1 className="py-20 text-5xl font-bold text-left md:text-left dark:text-white">
-					Contact
-				</h1>
-			</div>
-			<div className="relative z-10 max-w-2xl mx-auto mb-20 dark:shadow-3xl">
-				<div className="grid grid-cols-1 gap-2 md:gap-6">
-					<div className="flex flex-col gap-6">
-						<header className="">
-							<h1 className="text-2xl font-semibold text-black dark:text-white">
-								Get in touch, let's talk.
-							</h1>
-							<p className="mt-2 text-base font-light text-black dark:text-white">
-								Fill in the details and I'll get back to you as
-								soon as I can.
-							</p>
-						</header>
-						<div className="inline-flex flex-col w-full mt-4 mb-10 icons-container md:full">
-							<div className="flex flex-row items-center h-12 p-4 mb-4 space-x-6 border border-black hover:border hover:border-synthPink dark:bg-synthPink">
-								<svg
-									xmlns="http://www.w3.org/2000/svg"
-									width="16"
-									height="16"
-									fill="currentColor"
-									className="w-4 h-4 bi bi-telephone-fill text-synthPink dark:text-white"
-									viewBox="0 0 16 16"
-								>
-									<path
-										fillRule="evenodd"
-										d="M1.885.511a1.745 1.745 0 0 1 2.61.163L6.29 2.98c.329.423.445.974.315 1.494l-.547 2.19a.678.678 0 0 0 .178.643l2.457 2.457a.678.678 0 0 0 .644.178l2.189-.547a1.745 1.745 0 0 1 1.494.315l2.306 1.794c.829.645.905 1.87.163 2.611l-1.034 1.034c-.74.74-1.846 1.065-2.877.702a18.634 18.634 0 0 1-7.01-4.42 18.634 18.634 0 0 1-4.42-7.009c-.362-1.03-.037-2.137.703-2.877L1.885.511z"
-									/>
-								</svg>
-								<p className="text-sm font-light text-black dark:text-white">
-									{userData.phone}
-								</p>
+		<Section index={index} total={total} label="Get in touch">
+			<div className="grid cell-grid md:grid-cols-12">
+				{/* Details */}
+				<div className="md:col-span-5">
+					<dl>
+						{details.map((d) => (
+							<div key={d.label} className="px-4 py-5 border-b sm:px-6 border-line">
+								<dt className="label">{d.label}</dt>
+								<dd className="mt-1 text-[15px] font-medium text-ink">
+									{d.href ? (
+										<a
+											href={d.href}
+											target={d.external ? "_blank" : undefined}
+											rel={d.external ? "noopener noreferrer" : undefined}
+											className="hover:text-brand-ink"
+										>
+											{d.value}
+											{d.external ? <span className="ml-1 text-faint">↗</span> : null}
+										</a>
+									) : (
+										d.value
+									)}
+								</dd>
 							</div>
-							<div className="flex flex-row items-center h-12 p-4 mb-4 space-x-6 border border-black hover:border hover:border-synthPink dark:bg-synthPink">
-								<svg
-									xmlns="http://www.w3.org/2000/svg"
-									width="16"
-									height="16"
-									fill="currentColor"
-									className="w-4 h-4 bi bi-envelope-fill text-synthPink dark:text-white"
-									viewBox="0 0 16 16"
-								>
-									<path d="M.05 3.555A2 2 0 0 1 2 2h12a2 2 0 0 1 1.95 1.555L8 8.414.05 3.555zM0 4.697v7.104l5.803-3.558L0 4.697zM6.761 8.83l-6.57 4.027A2 2 0 0 0 2 14h12a2 2 0 0 0 1.808-1.144l-6.57-4.027L8 9.586l-1.239-.757zm3.436-.586L16 11.801V4.697l-5.803 3.546z" />
-								</svg>
-								<p className="text-sm font-light text-black dark:text-white">
-									{userData.email}
-								</p>
-							</div>
-							<div className="flex flex-row items-center h-12 p-4 mb-4 space-x-6 border border-black hover:border hover:border-synthPink dark:bg-synthPink">
-								<svg
-									xmlns="http://www.w3.org/2000/svg"
-									width="16"
-									height="16"
-									fill="currentColor"
-									className="w-4 h-4 bi bi-pin-fill text-synthPink dark:text-white"
-									viewBox="0 0 16 16"
-								>
-									<path d="M4.146.146A.5.5 0 0 1 4.5 0h7a.5.5 0 0 1 .5.5c0 .68-.342 1.174-.646 1.479-.126.125-.25.224-.354.298v4.431l.078.048c.203.127.476.314.751.555C12.36 7.775 13 8.527 13 9.5a.5.5 0 0 1-.5.5h-4v4.5c0 .276-.224 1.5-.5 1.5s-.5-1.224-.5-1.5V10h-4a.5.5 0 0 1-.5-.5c0-.973.64-1.725 1.17-2.189A5.921 5.921 0 0 1 5 6.708V2.277a2.77 2.77 0 0 1-.354-.298C4.342 1.674 4 1.179 4 .5a.5.5 0 0 1 .146-.354z" />
-								</svg>
-								<p className="text-sm font-light text-black dark:text-white">
-									{userData.address}
-								</p>
-							</div>
-						</div>
-					</div>
-					<div className="contactform md:mt-0">
-						<h2 className="mb-6 text-2xl font-bold">Contact me</h2>
-						<form
-							ref={form}
-							onSubmit={sendEmail}
-							className="flex flex-col form"
-						>
-							<label className="text-sm text-black dark:text-white">
-								Your Name
-							</label>
+						))}
+					</dl>
+				</div>
+
+				{/* Form */}
+				<div className="px-4 py-8 sm:px-6 md:col-span-7 md:px-10 md:py-10">
+					<h2 className="text-2xl font-bold tracking-tight text-ink">Send a message</h2>
+					<p className="mt-2 text-sm text-muted">Fill in the details and I&apos;ll get back to you as soon as I can.</p>
+
+					<form ref={form} onSubmit={sendEmail} className="grid gap-6 mt-8 sm:grid-cols-2">
+						<label className="block">
+							<span className="label text-ink">Your name</span>
+							<input className={`${fieldClass} h-11`} type="text" name="user_name" autoComplete="name" />
+						</label>
+						<label className="block">
+							<span className="label text-ink">
+								Email <span className="text-brand-ink">*</span>
+							</span>
 							<input
-								className="h-12 px-3 py-2 mt-2 mb-6 text-sm font-light text-black bg-white border border-black focus:outline-none focus:ring-2 focus:border-none ring-synthPink dark:border-black"
-								type="text"
-								name="user_name"
-							/>
-							<label className="flex text-sm text-black dark:text-white">
-								Email <p className="text-synthPink">*</p>
-							</label>
-							<input
-								className="h-12 px-3 py-2 mt-2 mb-6 text-sm font-light text-black bg-white border border-black focus:outline-none focus:ring-2 focus:border-none ring-synthPink dark:border-black"
+								className={`${fieldClass} h-11`}
 								type="email"
 								name="user_email"
+								autoComplete="email"
 								required
 							/>
-							<label className="flex text-sm text-black dark:text-white">
-								Message <p className="text-synthPink">*</p>
-							</label>
-							<textarea
-								className="h-40 px-3 py-2 mt-2 mb-6 text-sm font-light text-black bg-white border border-black focus:outline-none focus:ring-2 focus:border-none ring-synthPink dark:border-black"
-								name="message"
-								required
-							/>
-							<input
-								className="w-1/2 py-4 mt-8 text-xs font-bold text-black bg-white border border-black border-solid cursor-pointer hover:bg-synthPink hover:text-white dark:text-white dark:bg-synthPink dark:border-synthPink dark:hover:border-white"
-								type="submit"
-								value="Send Message"
-							/>
-						</form>
-					</div>
+						</label>
+						<label className="block sm:col-span-2">
+							<span className="label text-ink">
+								Message <span className="text-brand-ink">*</span>
+							</span>
+							<textarea className={`${fieldClass} h-40 py-2.5 resize-y`} name="message" required />
+						</label>
+						<div className="flex items-center justify-between gap-4 sm:col-span-2">
+							<span className="label">* Required</span>
+							<button type="submit" className="btn btn-solid" disabled={sending}>
+								{sending ? "Sending…" : "Send message"}
+							</button>
+						</div>
+					</form>
 				</div>
 			</div>
-		</section>
+		</Section>
 	);
 }
