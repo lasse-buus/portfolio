@@ -1,104 +1,51 @@
-import Head from "next/head";
 import imageUrlBuilder from "@sanity/image-url";
-import { useState, useEffect } from "react";
-import { useRouter } from "next/router";
 import ContainerBlock from "../components/ContainerBlock";
+import PageHeader from "@components/grid/PageHeader";
+import Section from "@components/grid/Section";
+import MediaCard from "@components/grid/MediaCard";
 
-export default function Home({ projects }) {
-	const router = useRouter();
-	const [mappedProjects, setMappedProjects] = useState([]);
+const builder = imageUrlBuilder({ projectId: "vn88o3gc", dataset: "production" });
 
-	useEffect(() => {
-		if (projects.length) {
-			const imgBuilder = imageUrlBuilder({
-				projectId: "vn88o3gc",
-				dataset: "production",
-			});
-
-			setMappedProjects(
-				projects.map((p) => {
-					return {
-						...p,
-						image: imgBuilder.image(p.image),
-					};
-				})
-			);
-		} else {
-			setMappedProjects([]);
-		}
-	}, [projects]);
+export default function Projects({ projects }) {
+	const items = [...projects].sort((a, b) => (a.title > b.title ? 1 : -1));
 
 	return (
-		<ContainerBlock title="Lasse Buus - Projects">
-			<section>
-				<div className="max-w-6xl mx-auto mt-10 md:mt-20">
-				<h1 className="block text-5xl font-bold text-black dark:text-white">
-						Projects
-					</h1>
-				</div>
-				<div className="grid max-w-6xl grid-cols-1 gap-8 pt-10 pb-10 mx-auto sm:grid-cols-2 md:grid-cols-3">
-					{projects.length ? (
-						mappedProjects
-							.sort((a, b) => (a.title > b.title ? 1 : -1))
-							.map((project, index) => (
-								<div
-									onClick={() =>
-										router.push(
-											`/projects/${project.slug.current}`
-										)
-									}
-									key={index + project.slug.current}
-									className="relative block w-full overflow-hidden cursor-pointer"
-								>
-									<div className="relative h-[400px]">
-									<img
-										src={project.image}
-										alt={project.title}
-										quality={75}
-										sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-										fill
-										className="w-full md:w-[400px] h-[400px] object-cover"
-									/>
-									</div>
-									<div>
-										<h3 className="relative px-2 py-1 pl-0 mt-2 text-lg font-bold text-black rounded-sm dark:text-white">
-											<div className="flex self-start">
-												{project.title}
-											</div>
-										</h3>
-										<h4 className="relative px-2 py-1 pl-0 text-sm font-normal text-black rounded-sm dark:text-white">
-											<div className="flex self-start">
-												{project.status}
-											</div>
-										</h4>
-									</div>
-								</div>
-							))
-					) : (
-						<>No Projects Yet</>
-					)}
-				</div>
-			</section>
+		<ContainerBlock bleed title="Lasse Buus - Projects">
+			<PageHeader label="Projects" title="Selected work" meta={`${items.length} ${items.length === 1 ? "project" : "projects"}`} />
+			<Section label="All projects">
+				{items.length ? (
+					<div className="grid cell-grid sm:grid-cols-2 lg:grid-cols-3">
+						{items.map((post, i) => {
+							const source = post.image;
+							return (
+								<MediaCard
+									key={post.slug.current}
+									href={`/projects/${post.slug.current}`}
+									src={source ? builder.image(source).width(900).auto("format").url() : null}
+									eyebrow="Project"
+									eyebrowRight={post.status}
+									title={post.title}
+									priority={i < 3}
+								/>
+							);
+						})}
+					</div>
+				) : (
+					<p className="px-6 py-10 text-sm text-muted">No projects yet.</p>
+				)}
+			</Section>
 		</ContainerBlock>
 	);
 }
 
-export const getServerSideProps = async (pageContext) => {
+export const getServerSideProps = async () => {
 	const query = encodeURIComponent('*[ _type == "projects" ]');
 	const url = `https://vn88o3gc.api.sanity.io/v1/data/query/production?query=${query}`;
 	const result = await fetch(url).then((res) => res.json());
 
-	if (!result.result || !result.result.length) {
-		return {
-			props: {
-				projects: [],
-			},
-		};
-	} else {
-		return {
-			props: {
-				projects: result.result,
-			},
-		};
-	}
+	return {
+		props: {
+			projects: result?.result?.length ? result.result : [],
+		},
+	};
 };

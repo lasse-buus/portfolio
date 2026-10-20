@@ -1,89 +1,70 @@
 import React from "react";
 import userData from "@constants/data";
+import Section from "@components/grid/Section";
 
-export default function AboutExperience() {
+function Row({ date, place, title, content, badge }) {
 	return (
-		<div>
-			<div className="max-w-6xl mx-auto mt-20">
-				<div className="flex flex-wrap content-between">
-					<div className="w-full max-w-2xl mx-auto mb-14">
-						<h3 className="inline-block text-3xl font-medium text-black dark:text-white">
-							Experiences
-						</h3>
-						<div className="flex flex-wrap items-center gap-10">
-							{userData.aboutExperience.map((info, idx) => (
-								<ExperienceCard
-									key={idx}
-									title={info.title}
-									date={info.date}
-									company={info.company}
-									content={info.content}
-								/>
-							))}
-						</div>
-					</div>
-					<div className="w-full max-w-2xl mx-auto my-8">
-						<h3 className="inline-block mb-8 text-3xl font-medium text-black dark:text-white">
-							Education
-						</h3>
-						<div className="flex flex-col flex-wrap items-center w-full gap-10">
-							{userData.aboutSchool.map((info, idx) => (
-								<SchoolCard
-									key={idx}
-									degree={info.degree}
-									title={info.title}
-									date={info.date}
-									school={info.school}
-									content={info.content}
-								/>
-							))}
-						</div>
-					</div>
-				</div>
+		<li className="grid gap-3 px-4 py-8 border-b sm:px-6 md:grid-cols-12 md:gap-6 last:border-b-0 border-line">
+			<div className="md:col-span-4">
+				<span className="block label text-ink">{date}</span>
+				<span className="block mt-2 text-sm text-muted">{place}</span>
 			</div>
-		</div>
+			<div className="md:col-span-8">
+				<div className="flex flex-wrap items-center gap-3">
+					<h3 className="text-lg font-bold tracking-tight text-ink">{title}</h3>
+					{badge ? (
+						<span className="px-2 py-0.5 text-[11px] font-mono uppercase tracking-wider rounded border border-line text-brand-ink">
+							{badge}
+						</span>
+					) : null}
+				</div>
+				<p className="mt-2 text-[15px] leading-relaxed text-muted max-w-[68ch]">{content}</p>
+			</div>
+		</li>
 	);
 }
 
-const ExperienceCard = ({ title, date, company, content }) => {
+export function AboutWork({ index, total }) {
 	return (
-		<div className="relative mt-8">
-			<h4 className="relative inline-block px-2 py-1 text-sm font-normal bg-white text-synthPink bold dark:bg-transparent dark:text-gray-200">
-				<div className="flex self-start">{date}</div>
-			</h4>
-			<h3 className="my-4 text-xl font-semibold leading-none text-black dark:text-white">
-				{title}
-			</h3>
-			<h4 className="mb-2 text-sm font-light text-gray-700 text-md dark:text-gray-100">
-				{company}
-			</h4>
-			<p className="font-sans text-base text-black font-regular dark:text-white">
-				{content}
-			</p>
-		</div>
+		<Section index={index} total={total} label="Experience">
+			<ol>
+				{userData.aboutExperience.map((info) => (
+					<Row
+						key={`${info.company}-${info.date}`}
+						date={info.date}
+						place={info.company}
+						title={info.title}
+						content={info.content}
+					/>
+				))}
+			</ol>
+		</Section>
 	);
-};
+}
 
-const SchoolCard = ({ title, date, school, content, degree }) => {
+export function AboutEducation({ index, total }) {
 	return (
-		<div className="relative w-full mt-6">
-			{degree ? (
-				<span className="relative top-0 right-0 inline-block p-2 mb-4 text-xs font-light text-white bg-synthPink dark:bg-synthPink dark:text-white">
-					{degree}
-				</span>
-			) : (
-				""
-			)}
-			<h4 className="relative block px-2 py-1 pl-0 text-sm font-semibold text-black bold dark:text-white">
-				<div className="flex self-start">{date}</div>
-			</h4>
-			<h3 className="relative my-4 text-xl font-light leading-none text-black dark:text-white">
-				{title}
-			</h3>
-			<h4 className="mb-2 font-light text-md text-synthPink dark:text-gray-200">{school}</h4>
-			<p className="font-sans text-base text-black font-regular dark:text-white">
-				{content}
-			</p>
-		</div>
+		<Section index={index} total={total} label="Education">
+			<ol>
+				{userData.aboutSchool.map((info) => (
+					<Row
+						key={`${info.school}-${info.date}`}
+						date={info.date}
+						place={info.school}
+						title={info.title}
+						content={info.content}
+						badge={info.degree}
+					/>
+				))}
+			</ol>
+		</Section>
 	);
-};
+}
+
+export default function AboutExperience(props) {
+	return (
+		<>
+			<AboutWork {...props} />
+		</>
+	);
+}

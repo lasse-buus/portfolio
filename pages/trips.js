@@ -1,110 +1,57 @@
 import imageUrlBuilder from "@sanity/image-url";
-import { useState, useEffect } from "react";
-import { useRouter } from "next/router";
 import ContainerBlock from "../components/ContainerBlock";
+import PageHeader from "@components/grid/PageHeader";
+import Section from "@components/grid/Section";
+import MediaCard from "@components/grid/MediaCard";
 import client from "@lib/sanity";
-import moment from "moment";
-import Image from "next/image";
-export default function Home({ trips }) {
-	const router = useRouter();
-	const [mappedTrips, setMappedTrips] = useState([]);
-	const builder = imageUrlBuilder(client);
 
-	function urlFor(source) {
-		return builder.image(source);
-	}
+const builder = imageUrlBuilder(client);
 
-	useEffect(() => {
-		if (trips.length) {
-			setMappedTrips(
-				trips.map((t) => {
-					return {
-						...t,
-					};
-				})
-			);
-		} else {
-			setMappedTrips([]);
-		}
-	}, [trips]);
+const formatDate = (iso) =>
+	iso ? new Intl.DateTimeFormat("en-GB", { month: "short", year: "numeric" }).format(new Date(iso)) : "";
+
+export default function Trips({ trips }) {
+	const items = [...trips].sort((a, b) => new Date(b.releaseDate) - new Date(a.releaseDate));
 
 	return (
-		<ContainerBlock title="Lasse Buus - Trips">
-			<section>
-				<div className="max-w-6xl mx-auto mt-10 md:mt-20">
-					<h1 className="block text-5xl font-bold text-black dark:text-white">
-						Trips
-					</h1>
-				</div>
-				<div className="grid max-w-6xl grid-cols-1 gap-8 pt-10 pb-10 mx-auto sm:grid-cols-2 md:grid-cols-3">
-					{trips.length ? (
-						mappedTrips
-						.sort(
-							(a, b) =>
-								new Date(b.releaseDate) -
-								new Date(a.releaseDate)
-						)
-							.map((trips, item) => (
-								<div
-								onClick={() =>
-									router.push(
-										`/trips/${trips.slug.current}`
-									)
-								}
-									key={item + trips.slug.current}
-									className="relative block w-full overflow-hidden cursor-pointer"
-								>
-									<div className="relative h-[400px]">
-									<Image
-										src={urlFor(trips.images[0]).url()}
-										alt={trips.title}
-										sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-										quality={75}
-										fill
-										className="w-full md:w-[400px] h-[400px] object-cover"
-									/>
-									</div>
-									<div>
-										<h3 className="relative px-2 py-1 pl-0 mt-2 text-lg font-bold text-black rounded-sm dark:text-white">
-											<div className="flex self-start">
-											{trips.title}
-											</div>
-										</h3>
-										<span className="relative flex px-2 py-1 pl-0 text-sm font-normal text-white rounded-sm dark:text-white">
-											<div className="flex self-start p-2 text-black bg-white dark:bg-synth dark:text-white">
-											{moment(trips.releaseDate).format(
-											"Do MMMM YYYY"
-										)}
-											</div>
-										</span>
-									</div>
-								</div>
-							))
-					) : (
-						<>No Projects Yet</>
-					)}
-				</div>
-			</section>
+		<ContainerBlock bleed title="Lasse Buus - Trips">
+			<PageHeader label="Trips" title="Places I've been" meta={`${items.length} ${items.length === 1 ? "trip" : "trips"}`} />
+			<Section label="All trips">
+				{items.length ? (
+					<div className="grid cell-grid sm:grid-cols-2 lg:grid-cols-3">
+						{items.map((trip, i) => {
+							const cover = trip?.images?.[0];
+							return (
+								<MediaCard
+									key={trip.slug.current}
+									href={`/trips/${trip.slug.current}`}
+									src={cover ? builder.image(cover).width(900).auto("format").url() : null}
+									alt={trip.title}
+									ratio="1/1"
+									eyebrow={formatDate(trip.releaseDate)}
+									eyebrowRight={trip.images?.length ? `${trip.images.length} photos` : null}
+									title={trip.title}
+									priority={i < 3}
+								/>
+							);
+						})}
+					</div>
+				) : (
+					<p className="px-6 py-10 text-sm text-muted">No trips yet.</p>
+				)}
+			</Section>
 		</ContainerBlock>
 	);
 }
 
-export const getServerSideProps = async (pageContext) => {
+export const getServerSideProps = async () => {
 	const query = encodeURIComponent('*[ _type == "gallery" ]');
 	const url = `https://vn88o3gc.api.sanity.io/v1/data/query/production?query=${query}`;
 	const result = await fetch(url).then((res) => res.json());
 
-	if (!result.result || !result.result.length) {
-		return {
-			props: {
-				trips: [],
-			},
-		};
-	} else {
-		return {
-			props: {
-				trips: result.result,
-			},
-		};
-	}
+	return {
+		props: {
+			trips: result?.result?.length ? result.result : [],
+		},
+	};
 };

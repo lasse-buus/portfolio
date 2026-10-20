@@ -1,111 +1,79 @@
 import ContainerBlock from "../components/ContainerBlock";
-import FavouriteProjects from "../components/frontpage/FavouriteProjects";
 import FavouritePosts from "../components/frontpage/FavouritePosts";
 import FavouriteTrips from "../components/frontpage/FavouriteTrips";
 import LatestCode from "../components/frontpage/LatestCode";
 import Hero from "../components/frontpage/Hero";
+import Services from "@components/frontpage/Services";
+import ContactCta from "@components/frontpage/ContactCta";
 import getLatestRepos from "@lib/getLatestRepos";
 import userData from "@constants/data";
 import client from "@lib/sanity";
-import Services from "@components/frontpage/Services";
 
-export default function Home({ hero, projects, repositories, posts, trips }) {
+const TOTAL_SECTIONS = 5;
+
+export default function Home({ hero, repositories, posts, trips }) {
 	return (
-		<>
-			<ContainerBlock
-				title="Lasse Buus - Developer, Designer"
-				description="This is my portfolio"
-			>
-				<Hero hero={hero} />
-				<Services />
-				{/* <FavouriteProjects projects={projects} /> */}
-				<FavouritePosts posts={posts} />
-				<LatestCode repositories={repositories} />
-				<FavouriteTrips trips={trips} />
-			</ContainerBlock>
-		</>
+		<ContainerBlock
+			bleed
+			title="Lasse Buus - Developer, Designer"
+			description="Lasse Buus Nielsen — frontend developer and UX/UI designer based in Oslo, Norway."
+		>
+			<Hero hero={hero} />
+			<Services index={1} total={TOTAL_SECTIONS} />
+			<FavouritePosts posts={posts} index={2} total={TOTAL_SECTIONS} />
+			<LatestCode repositories={repositories} index={3} total={TOTAL_SECTIONS} />
+			<FavouriteTrips trips={trips} index={4} total={TOTAL_SECTIONS} />
+			<ContactCta index={5} total={TOTAL_SECTIONS} />
+		</ContainerBlock>
 	);
 }
 
-// Create a query called heroQuery
-const heroQuery = `*[_type == "hero"][0] {
-title,
-subtitle,
-"ctaUrl": cta {
-	current
-		},
-image {
-	...asset->
-},
-imagecaption
+// Only fetch the fields the front page renders — keeps the page data small
+const heroQuery = `*[_type == "hero"][0]{
+	title,
+	subtitle,
+	imagecaption,
+	"image": { "url": image.asset->url }
 }`;
 
-// Create a query called projectsQuery
-const projectsQuery = `*[_type == "projects"] {
+const postsQuery = `*[_type == "posts"]{
 	title,
-	subtitle,
-	"ctaUrl": cta {
-		current
-			},
-	image {
-		...asset->
-	},
-	imagecaption,
-	blockText,
+	status,
 	slug,
-	status
-	}`;
+	"imagefrontpage": { "url": imagefrontpage.asset->url }
+}`;
 
-// Create a query called postQuery
-const postsQuery = `*[_type == "posts"] {
+const tripsQuery = `*[_type == "gallery"] | order(releaseDate desc)[0...3]{
 	title,
-	subtitle,
-	"ctaUrl": cta {
-		current
-			},
-	image {
-		...asset->
-	},
-	imagefrontpage {
-		...asset->
-	},
-	imagecaption,
-	blockText,
 	slug,
-	status
-	}`;
+	releaseDate,
+	"images": images[0...1]
+}`;
 
-// Create a query called tripsQuery
-const tripsQuery = `*[_type == "gallery"] {
-	title,
-	slug,
-	images,
-	releaseDate
-	}`;
+const pickRepo = ({ id, name, html_url, pushed_at, description, language }) => ({
+	id,
+	name,
+	html_url,
+	pushed_at,
+	description: description ?? null,
+	language: language ?? null,
+});
 
 export async function getStaticProps() {
-	const heroData = await client.fetch(heroQuery);
-	const projectsData = await client.fetch(projectsQuery);
-	const postsData = await client.fetch(postsQuery);
-	const tripsData = await client.fetch(tripsQuery);
-
-	let token = process.env.GITHUB_AUTH_TOKEN;
-
-	const repositories = await getLatestRepos(userData, token);
-
-	const hero = { heroData };
-	const projects = { projectsData };
-	const posts = { postsData };
-	const trips = { tripsData };
+	const [heroData, postsData, tripsData, repos] = await Promise.all([
+		client.fetch(heroQuery),
+		client.fetch(postsQuery),
+		client.fetch(tripsQuery),
+		getLatestRepos(userData, process.env.GITHUB_AUTH_TOKEN),
+	]);
 
 	return {
 		props: {
-			hero,
-			repositories,
-			projects,
-			posts,
-			trips,
+			hero: { heroData },
+			posts: { postsData },
+			trips: { tripsData },
+			repositories: (repos || []).map(pickRepo),
 		},
-		revalidate: 1,
+		revalidate: 60,
 	};
 }

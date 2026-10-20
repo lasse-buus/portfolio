@@ -1,96 +1,98 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
+import { SiFigma, SiReact, SiNextdotjs, SiTailwindcss, SiSanity, SiWordpress } from "react-icons/si";
 import userData from "@constants/data";
-import moment from "moment";
-import Image from "next/image";
-import ArrowButton from "@components/ArrowButton";
+import Section, { SectionLink, ArrowIcon } from "@components/grid/Section";
 
-export default function LatestCode({ repositories }) {
-	const [repos, setRepos] = useState([]);
+const LANGUAGE_COLORS = {
+	JavaScript: "#f1e05a",
+	TypeScript: "#3178c6",
+	PHP: "#4f5d95",
+	CSS: "#663399",
+	HTML: "#e34c26",
+	SCSS: "#c6538c",
+	Vue: "#41b883",
+};
 
-	useEffect(() => {
-		setRepos(repositories || []);
-	}, [repositories]);
+const STACK = [
+	{ name: "Figma", Icon: SiFigma },
+	{ name: "React", Icon: SiReact },
+	{ name: "Next.js", Icon: SiNextdotjs },
+	{ name: "Tailwind", Icon: SiTailwindcss },
+	{ name: "Sanity", Icon: SiSanity },
+	{ name: "WordPress", Icon: SiWordpress },
+];
 
-	return (
-		<section className="">
-			<div className="max-w-6xl mx-auto border-l border-r border-[#133e340d] sm:px-8">
-				<div className="flex flex-col items-center justify-between md:flex-row">
-					<h1 className="max-w-lg my-6 text-5xl font-bold text-center text-black md:my-10 dark:text-white lg:text-left">
-						Code
-					</h1>
+const formatDate = (iso) =>
+	iso
+		? new Intl.DateTimeFormat("en-GB", { day: "2-digit", month: "short", year: "numeric" }).format(new Date(iso))
+		: "—";
 
-					{/* ✅ Use ArrowButton directly (no surrounding <Link>) */}
-					<ArrowButton
-						text="View GitHub"
-						href={`https://github.com/${userData.githubUsername}`}
-						target="_blank"
-						rel="noopener"
-					/>
-				</div>
-			</div>
-
-			<div className="grid max-w-6xl grid-cols-2 gap-6 p-2 sm:p-8 mx-auto mt-6 md:grid-cols-3 gap-y-6 md:mt-0 border-l border-r border-[#133e340d]">
-				{repos.map((latestRepo, idx) => (
-					<div
-						key={`${idx}-${latestRepo.id}`}
-						className={`${
-							idx % 6 === 0 || idx % 6 === 3 || idx % 6 === 4
-								? "col-span-2 md:col-span-2"
-								: "col-span-2 md:col-span-1"
-						}`}
-					>
-						<GithubRepoCard latestRepo={latestRepo} />
-					</div>
-				))}
-			</div>
-		</section>
-	);
-}
-
-const GithubRepoCard = ({ latestRepo }) => {
-	// Prefer html_url for viewing in browser; clone_url is for git
-	const repoHref = latestRepo?.html_url || latestRepo?.clone_url || "#";
+export default function LatestCode({ repositories, index, total }) {
+	const repos = repositories || [];
 
 	return (
-		<div className="relative flex flex-col align-top cursor-pointer bg-synth group">
-			<div className="relative block w-full h-[350px] dark:border">
-				<Image
-					src="/github.jpg"
-					alt="GitHub repo background"
-					fill
-					sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
-					className="relative object-cover opacity-10"
-					priority={false}
-					quality={60}
-				/>
-
-				{/* Title */}
-				<h3 className="absolute p-2 text-[12px] font-normal text-black bg-white left-6 top-6 sm:flex">
-					{latestRepo?.name ?? "Untitled repository"}
-				</h3>
-
-				{/* Last push date */}
-				<span className="absolute self-end block my-2 text-sm text-white underline top-6 right-6 dark:text-white">
-					{latestRepo?.pushed_at
-						? moment(latestRepo.pushed_at).format("Do MMMM YYYY")
-						: "—"}
-				</span>
-			</div>
-
-			<div className="relative">
-				<div className="flex self-start">
-					<div>
+		<Section
+			index={index}
+			total={total}
+			label="Code"
+			action={
+				<SectionLink href={`https://github.com/${userData.githubUsername}`} external>
+					GitHub
+				</SectionLink>
+			}
+		>
+			{repos.length ? (
+				<div className="grid cell-grid sm:grid-cols-2 lg:grid-cols-3">
+					{repos.map((repo, i) => (
 						<a
-							href={repoHref}
+							key={repo.id}
+							href={repo.html_url}
 							target="_blank"
 							rel="noopener noreferrer"
-							className="absolute bottom-6 right-6 bg-white p-2 font-normal inline-block text-[12px] text-black hover:bg-synthPink hover:text-white"
+							className="flex flex-col p-6 transition bg-page hover:bg-surface group min-h-[208px]"
 						>
-							View Repository
+							<div className="flex items-center justify-between">
+								<span className="label">Repo / {String(i + 1).padStart(2, "0")}</span>
+								<span className="label">{formatDate(repo.pushed_at)}</span>
+							</div>
+							<h3 className="mt-6 font-mono text-base font-medium break-words text-ink">{repo.name}</h3>
+							<p
+								className={`mt-2 text-sm leading-relaxed ${repo.description ? "text-muted" : "text-faint"}`}
+								style={{ display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden" }}
+							>
+								{repo.description || "No description yet."}
+							</p>
+							<div className="flex items-center justify-between pt-6 mt-auto">
+								<span className="flex items-center gap-2 text-xs text-muted">
+									<span
+										className="w-2 h-2 rounded-full"
+										style={{ background: LANGUAGE_COLORS[repo.language] || "var(--line-strong)" }}
+									/>
+									{repo.language || "Other"}
+								</span>
+								<span className="arrow">
+									<ArrowIcon />
+								</span>
+							</div>
 						</a>
-					</div>
+					))}
 				</div>
+			) : (
+				<p className="px-6 py-10 text-sm text-muted">Couldn&apos;t load repositories right now.</p>
+			)}
+
+			{/* Stack strip */}
+			<div className="border-t border-line">
+				<p className="py-3 text-center border-b label border-line">Designed and built with</p>
+				<ul className="grid grid-cols-3 gap-px md:grid-cols-6 bg-line">
+					{STACK.map((tool) => (
+						<li key={tool.name} className="flex items-center justify-center gap-3 h-14 bg-page">
+							<tool.Icon size={16} className="text-ink" aria-hidden="true" />
+							<span className="text-sm font-medium text-muted">{tool.name}</span>
+						</li>
+					))}
+				</ul>
 			</div>
-		</div>
+		</Section>
 	);
-};
+}

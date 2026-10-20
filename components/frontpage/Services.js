@@ -1,79 +1,42 @@
 import React from "react";
 import Image from "next/image";
+import Section from "@components/grid/Section";
 
-export default function Services() {
+const services = [
+	{
+		icon: "/services/crown.svg",
+		title: "UI/UX Design",
+		text: "Turn what you have in mind of a digital product into reality. For any platform you consider.",
+	},
+	{
+		icon: "/services/app.svg",
+		title: "Application Development",
+		text: "Standard designing, building, and implementing your applications with documentation.",
+	},
+	{
+		icon: "/services/globe.svg",
+		title: "Web Development",
+		text: "Create and maintain your websites and also take care of its performance and traffic capacity.",
+	},
+];
+
+export default function Services({ index, total }) {
 	return (
-		<div className="">
-			<div className="max-w-6xl p-8 mx-auto border-l border-r border-[#133e340d]">
-				<div className="flex flex-col items-center gap-8 md:flex-row md:gap-8">
-					<div className="w-full md:w-1/3 md:h-[300px] text-center text-black dark:text-white shadow-black rounded-md">
-						<div className="flex flex-col items-center justify-center h-full p-6">
-							<div>
-								<div className="bg-synth flex items-center justify-center h-[50px] w-[50px]">
-									<Image
-										src="/services/crown.svg"
-										width="25"
-										height="25"
-										className="text-white"
-									/>
-								</div>
-							</div>
-
-							<h3 className="my-4 text-xl font-bold">
-								UI/UX Design
-							</h3>
-							<p className="font-sans text-sm">
-								Turn what you have in mind of a digital product
-								into reality. For any platform you consider.
-							</p>
+		<Section index={index} total={total} label="What I do">
+			<div className="grid gap-px md:grid-cols-3 bg-line">
+				{services.map((s, i) => (
+					<div key={s.title} className="flex flex-col p-6 bg-page md:p-8 md:min-h-[240px]">
+						<div className="flex items-start justify-between">
+							<span className="flex items-center justify-center w-10 h-10 rounded-md bg-brand">
+								<Image src={s.icon} width={18} height={18} alt="" />
+							</span>
+							<span className="label">0{i + 1}</span>
 						</div>
+						<h3 className="mt-auto pt-10 text-xl font-bold tracking-tight text-ink">{s.title}</h3>
+						<p className="mt-2 text-sm leading-relaxed text-muted max-w-[34ch]">{s.text}</p>
 					</div>
-					<div className="w-full md:w-1/3 md:h-[300px] text-center shadow-black rounded-md">
-						<div className="flex flex-col items-center justify-center h-full p-6">
-							<div>
-								<div className="bg-synth flex items-center justify-center h-[50px] w-[50px]">
-									<Image
-										src="/services/app.svg"
-										width="25"
-										height="25"
-										className="text-white"
-									/>
-								</div>
-							</div>
-
-							<h3 className="my-4 text-xl font-bold">
-								Application Development
-							</h3>
-							<p className="font-sans text-sm">
-								Standard designing, building, and implementing
-								your applications with documentation.
-							</p>
-						</div>
-					</div>
-					<div className="w-full md:w-1/3 md:h-[300px] text-center shadow-black rounded-md">
-						<div className="flex flex-col items-center justify-center h-full p-6">
-							<div>
-								<div className="bg-synth flex items-center justify-center h-[50px] w-[50px]">
-									<Image
-										src="/services/globe.svg"
-										width="25"
-										height="25"
-										className="text-white"
-									/>
-								</div>
-							</div>
-
-							<h3 className="my-4 text-xl font-bold">
-								Web Development
-							</h3>
-							<p className="font-sans text-sm">
-								Create and maintain your websites and also take
-								care of its performance and traffic capacity.
-							</p>
-						</div>
-					</div>
-				</div>
+				))}
 			</div>
-		</div>
+		</Section>
 	);
 }

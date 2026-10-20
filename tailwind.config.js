@@ -20,28 +20,41 @@ module.exports = {
   darkMode: "class",
   theme: {
     fontFamily: {
-      sans: ["Arial", "system-ui"],
+      sans: ['"Satoshi"', "ui-sans-serif", "system-ui", "-apple-system", "Segoe UI", "sans-serif"],
+      mono: ['"JetBrains Mono"', "ui-monospace", "SFMono-Regular", "Menlo", "monospace"],
       serif: ["ui-serif", "Georgia"],
-      display: ["Oswald"],
-      body: ['"Open Sans"'],
     },
     extend: {
       boxShadow: {
         xl: "0 5px 20px -1px rgba(0, 0, 0, 0.3)",
+        card: "0 1px 0 0 var(--line), 0 12px 32px -16px rgba(15, 23, 18, 0.18)",
       },
       maxWidth: {
         "6xl": "1240px",
       },
       colors: {
-        // Tokens that track CSS variables
+        // Design tokens — values live in styles/globals.css (light + dark)
         page: "var(--bg)",
-        text: "var(--text)",
-        // Optional fixed alias
+        surface: "var(--surface)",
+        ink: "var(--ink)",
+        muted: "var(--muted)",
+        faint: "var(--faint)",
+        line: "var(--line)",
+        "line-strong": "var(--line-strong)",
+        brand: "var(--brand)",
+        "brand-ink": "var(--brand-ink)",
         lightbg: "#f9f3ef",
+      },
+      letterSpacing: {
+        label: "0.14em",
       },
     },
     transitionDuration: {
+      DEFAULT: "150ms",
       0: "0ms",
+      150: "150ms",
+      200: "200ms",
+      300: "300ms",
       2000: "2000ms",
       4000: "4000ms",
     },
@@ -55,12 +68,13 @@ module.exports = {
       olive: olivePalette,
       green: colors.emerald,
       purple: colors.violet,
-      yellow: colors.amber, // (you listed yellow twice earlier—kept one)
+      yellow: colors.amber,
       pink: colors.fuchsia,
       amber: colors.amber,
       emerald: colors.emerald,
       blue: colors.sky,
       red: colors.red,
+      // Legacy names still used on inner pages
       synth: { DEFAULT: "#133e34" },
       synthPink: { DEFAULT: "#133e34" },
       gradBlue: "#133e34",
