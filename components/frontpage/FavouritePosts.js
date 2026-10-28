@@ -3,9 +3,7 @@ import Section, { SectionLink } from "@components/grid/Section";
 import MediaCard from "@components/grid/MediaCard";
 
 export default function FavouritePosts({ posts, index, total }) {
-	const items = (posts?.postsData || [])
-		.slice(0, 3)
-		.sort((a, b) => (a.title > b.title ? 1 : -1));
+	const items = posts?.postsData || [];
 
 	return (
 		<Section

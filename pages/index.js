@@ -36,7 +36,7 @@ const heroQuery = `*[_type == "hero"][0]{
 	"image": { "url": image.asset->url }
 }`;
 
-const postsQuery = `*[_type == "posts"]{
+const postsQuery = `*[_type == "posts"] | order(releaseDate desc)[0...3]{
 	title,
 	status,
 	slug,
