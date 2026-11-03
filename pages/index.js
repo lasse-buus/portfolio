@@ -5,6 +5,7 @@ import LatestCode from "../components/frontpage/LatestCode";
 import Hero from "../components/frontpage/Hero";
 import Services from "@components/frontpage/Services";
 import ContactCta from "@components/frontpage/ContactCta";
+import SwarmBuild from "@components/frontpage/SwarmBuild";
 import getLatestRepos from "@lib/getLatestRepos";
 import userData from "@constants/data";
 import client from "@lib/sanity";
@@ -13,18 +14,22 @@ const TOTAL_SECTIONS = 5;
 
 export default function Home({ hero, repositories, posts, trips }) {
 	return (
-		<ContainerBlock
-			bleed
-			title="Lasse Buus - Developer, Designer"
-			description="Lasse Buus Nielsen — frontend developer and UX/UI designer based in Oslo, Norway."
-		>
-			<Hero hero={hero} />
-			<Services index={1} total={TOTAL_SECTIONS} />
-			<FavouritePosts posts={posts} index={2} total={TOTAL_SECTIONS} />
-			<LatestCode repositories={repositories} index={3} total={TOTAL_SECTIONS} />
-			<FavouriteTrips trips={trips} index={4} total={TOTAL_SECTIONS} />
-			<ContactCta index={5} total={TOTAL_SECTIONS} />
-		</ContainerBlock>
+		<>
+			<ContainerBlock
+				bleed
+				title="Lasse Buus - Developer, Designer"
+				description="Lasse Buus Nielsen — frontend developer and UX/UI designer based in Oslo, Norway."
+			>
+				<Hero hero={hero} />
+				<Services index={1} total={TOTAL_SECTIONS} />
+				<FavouritePosts posts={posts} index={2} total={TOTAL_SECTIONS} />
+				<LatestCode repositories={repositories} index={3} total={TOTAL_SECTIONS} />
+				<FavouriteTrips trips={trips} index={4} total={TOTAL_SECTIONS} />
+				<ContactCta index={5} total={TOTAL_SECTIONS} />
+			</ContainerBlock>
+			{/* Outside <main>, which stays hidden while the swarm builds it */}
+			<SwarmBuild />
+		</>
 	);
 }
 

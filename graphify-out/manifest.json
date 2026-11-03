@@ -294,9 +294,9 @@
     "semantic_hash": ""
   },
   "pages/index.js": {
-    "mtime": 1793231340.67176,
-    "seen": 1793231341.89357,
-    "ast_hash": "89b37b3038b37ac505a84870251b6e02",
+    "mtime": 1793745167.58033,
+    "seen": 1793745371.9736981,
+    "ast_hash": "4425eef8f4fd8b953656f8d6aec60a54",
     "semantic_hash": ""
   },
   "pages/projects.js": {
@@ -585,6 +585,18 @@
     "mtime": 1629896353.0,
     "seen": 1793231341.89361,
     "ast_hash": "abc642d3efb39cbc64811835e4e88743",
+    "semantic_hash": ""
+  },
+  "components/frontpage/SwarmBuild.js": {
+    "mtime": 1793745363.3213036,
+    "seen": 1793745371.973671,
+    "ast_hash": "a52600499bd89c75f5d964236bc64b96",
+    "semantic_hash": ""
+  },
+  "pages/_document.js": {
+    "mtime": 1793745081.5046117,
+    "seen": 1793745371.9736881,
+    "ast_hash": "78e526425cbfd0d0568b3c4324912a5f",
     "semantic_hash": ""
   },
   "cmsportfolio/package-lock.json": {
