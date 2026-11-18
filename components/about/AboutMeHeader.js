@@ -29,16 +29,25 @@ export default function AboutMeHeader({ index, total }) {
 					<div className="px-4 py-8 sm:px-6 md:px-10 md:py-10">
 						<span className="label">Hey, I&apos;m</span>
 						<h2 className="mt-2 text-3xl font-bold tracking-tight md:text-4xl text-ink">
-							Lasse Buus Nielsen<span className="text-brand-ink">.</span>
+							Lasse Buus Nielsen
+							<span className="text-brand-ink">.</span>
 						</h2>
 						<p className="mt-6 text-[15px] leading-relaxed text-muted max-w-[62ch]">
-							I am a Digital Concept Developer specializing in UI/UX and web development, with a focus for
-							details. I&apos;m currently working as a Frontend Developer for a company called Nettmaker in
-							Oslo, Norway where I have been for the past 4 year by starting out as an intern through the
-							AIESEC program. I&apos;m passionate about making sure that the solutions, interfaces, graphics
-							are user-friendly, aesthetically pleasing, clear, on-brand and usable by the clients of
-							Nettmaker. Every solution is different and therefore focusing on the details is an important
-							step, for making on-brand and usable solutions.
+							I’ve spent the last decade building for the web,
+							most recently nearly seven years at Nettmaker in
+							Oslo. I started there as an AIESEC intern and left
+							as the person who designed the solutions, presented
+							them to clients, and then built them myself in
+							React, Next.js and TypeScript. Working on both sides
+							means nothing gets lost between design and
+							development. I’ve built design systems and led the
+							design on client projects, and I’ve also done
+							consulting for teams at Vibb, Knowit and mvh. I’m
+							happiest in the details: the spacing that makes a
+							page breathe, the state nobody thought to design,
+							the interaction that just feels right. Every brand
+							is different, so every solution should be too, and
+							that’s what makes it both beautiful and usable.
 						</p>
 					</div>
 					<dl className="mt-auto border-t border-line">
@@ -47,10 +56,13 @@ export default function AboutMeHeader({ index, total }) {
 								key={f.label}
 								className="grid grid-cols-3 gap-4 px-4 py-4 border-b sm:px-6 md:px-10 last:border-b-0 border-line"
 							>
-								<dt className="label self-center">{f.label}</dt>
+								<dt className="self-center label">{f.label}</dt>
 								<dd className="col-span-2 text-sm font-medium text-ink">
 									{f.href ? (
-										<a href={f.href} className="link-u text-brand-ink">
+										<a
+											href={f.href}
+											className="link-u text-brand-ink"
+										>
 											{f.value}
 										</a>
 									) : (
